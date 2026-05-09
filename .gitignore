@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+data/*.duckdb
+data/*.wal
+slices/*.parquet
+node_modules/
+.next/
+.env
+*.egg-info/
+dist/
+build/
