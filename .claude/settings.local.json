@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "WebFetch(domain:docs.sourcify.dev)",
+      "WebSearch",
+      "WebFetch(domain:sourcify.dev)",
+      "Bash(git init *)",
+      "Bash(pip install *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git -C /home/krzysztof/Desktop/synthetic log --oneline)",
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(npx create-next-app@14 *)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(uvicorn backend.main:app --host 0.0.0.0 --port 8000)",
+      "Bash(curl -s http://localhost:8000/api/health)",
+      "Bash(curl -s 'http://localhost:8000/api/search?min_severity=High')",
+      "Bash(curl -s -w \"\\\\nHTTP %{http_code}\\\\n\" -X POST http://localhost:8000/api/export -H \"Content-Type: application/json\" -d '{}')",
+      "Bash(curl -s -w \"\\\\nHTTP %{http_code}\\\\n\" -X POST http://localhost:8000/api/export -H \"Content-Type: application/json\" -H \"X-Payment-Signed: mock-sig\" -d '{\"min_severity\": \"High\"}' -o /tmp/test.parquet)",
+      "Bash(curl -s -X POST http://localhost:8000/api/mcp -H \"Content-Type: application/json\" -H \"X-Payment-Signed: mock\" -d '{\"tool\": \"search_vulnerabilities\", \"args\": {\"detector\": \"reentrancy-eth\"}}')",
+      "Bash(kill %1)",
+      "WebFetch(domain:pypi.org)",
+      "WebFetch(domain:docs.cdp.coinbase.com)",
+      "WebFetch(domain:docs.x402.org)",
+      "Bash(solc-select install *)"
+    ]
+  }
+}
