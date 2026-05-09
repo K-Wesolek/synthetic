@@ -35,11 +35,48 @@ export interface SearchResult {
 }
 
 export interface PaymentChallenge {
-  payment_required: string;
-  wallet: string;
+  scheme: string;
   network: string;
-  message: string;
+  payTo: string;
+  maxAmountRequired: string;
+  description?: string;
 }
+
+// ---------------------------------------------------------------------------
+// x402 client – auto-signs and retries on 402 if a wallet key is configured
+// ---------------------------------------------------------------------------
+
+let _paidFetch: typeof fetch | null = null;
+let _x402InitAttempted = false;
+
+async function getPaidFetch(): Promise<typeof fetch> {
+  if (_paidFetch) return _paidFetch;
+  if (_x402InitAttempted) return fetch; // already tried, no key
+
+  _x402InitAttempted = true;
+  const pk = process.env.NEXT_PUBLIC_WALLET_PRIVATE_KEY;
+  if (!pk) return fetch; // no wallet configured – fall back to plain fetch
+
+  try {
+    const { x402Client } = await import("@x402/core/client");
+    const { ExactEvmScheme } = await import("@x402/evm/exact/client");
+    const { wrapFetchWithPayment } = await import("@x402/fetch");
+    const { privateKeyToAccount } = await import("viem/accounts");
+
+    const signer = privateKeyToAccount(pk as `0x${string}`);
+    const client = new x402Client();
+    client.register("eip155:*", new ExactEvmScheme(signer));
+    _paidFetch = wrapFetchWithPayment(fetch, client);
+    return _paidFetch;
+  } catch {
+    console.warn("x402 client init failed – falling back to plain fetch");
+    return fetch;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// API functions
+// ---------------------------------------------------------------------------
 
 export async function fetchContract(
   chainId: string,
@@ -64,24 +101,35 @@ export async function searchFindings(params: {
   return resp.json();
 }
 
+/**
+ * Export a benchmark slice as Parquet.
+ *
+ * If NEXT_PUBLIC_WALLET_PRIVATE_KEY is set, the x402 SDK automatically signs
+ * and pays on 402. Otherwise the raw 402 challenge is returned so the UI can
+ * display it.
+ */
 export async function exportSlice(
   params: { detector?: string; min_severity?: string },
-  paymentSig?: string
-): Promise<{ blob?: Blob; challenge?: PaymentChallenge }> {
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-  };
-  if (paymentSig) headers["X-Payment-Signed"] = paymentSig;
+): Promise<{ blob?: Blob; challenge?: PaymentChallenge; paid?: boolean }> {
+  const fetchFn = await getPaidFetch();
 
-  const resp = await fetch(`${API_BASE}/api/export`, {
+  const resp = await fetchFn(`${API_BASE}/api/export`, {
     method: "POST",
-    headers,
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(params),
   });
 
   if (resp.status === 402) {
+    // No wallet configured or payment failed – surface challenge to UI
+    const raw = resp.headers.get("payment-required");
+    if (raw) {
+      try {
+        return { challenge: JSON.parse(atob(raw)) };
+      } catch { /* fall through */ }
+    }
     return { challenge: await resp.json() };
   }
+
   if (!resp.ok) throw new Error(`Export failed: ${resp.statusText}`);
-  return { blob: await resp.blob() };
+  return { blob: await resp.blob(), paid: _paidFetch !== null };
 }

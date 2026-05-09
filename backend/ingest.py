@@ -38,11 +38,45 @@ def _is_slither_available() -> bool:
         return False
 
 
-def run_slither_analysis(sources: dict) -> list[dict]:
+def _ensure_solc_version(compiler_version: str | None) -> str | None:
+    """Install and return the solc binary path for the given compiler version.
+
+    Uses solc-select to manage versions. Returns the binary path or None if
+    the version can't be resolved.
+    """
+    if not compiler_version:
+        return None
+
+    # Extract semver from strings like "0.8.19+commit.7dd6d404"
+    version = compiler_version.split("+")[0].lstrip("v")
+
+    try:
+        # Check if already installed
+        result = subprocess.run(
+            ["solc-select", "versions"],
+            capture_output=True, text=True, timeout=10,
+        )
+        if version not in result.stdout:
+            subprocess.run(
+                ["solc-select", "install", version],
+                capture_output=True, text=True, timeout=120,
+            )
+        subprocess.run(
+            ["solc-select", "use", version],
+            capture_output=True, text=True, timeout=10,
+        )
+        return version
+    except (FileNotFoundError, subprocess.TimeoutExpired, subprocess.CalledProcessError):
+        return None
+
+
+def run_slither_analysis(sources: dict, compiler_version: str | None = None) -> list[dict]:
     """Run Slither static analysis on Solidity sources.
 
     Args:
         sources: mapping of filepath -> {"content": "..."} or filepath -> "source code"
+        compiler_version: Solidity compiler version (e.g. "0.8.19+commit.7dd6d404").
+                          If provided, solc-select sets the matching solc before analysis.
 
     Returns:
         List of finding dicts with keys: detector, severity, confidence,
@@ -51,6 +85,8 @@ def run_slither_analysis(sources: dict) -> list[dict]:
     """
     if not _is_slither_available():
         return []
+
+    _ensure_solc_version(compiler_version)
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp = Path(tmp_dir)
@@ -141,7 +177,10 @@ def ingest_contract(
         storage_layout=data.get("storage_layout"),
     )
 
-    slither_findings = run_slither_analysis(data.get("sources", {}))
+    slither_findings = run_slither_analysis(
+        data.get("sources", {}),
+        compiler_version=compilation.get("compilerVersion"),
+    )
 
     stored_findings = []
     for f in slither_findings:

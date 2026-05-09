@@ -20,7 +20,7 @@ def test_db():
 def client(test_db):
     from backend.main import create_app
 
-    app = create_app(test_db)
+    app = create_app(test_db, enable_x402=False)
     return TestClient(app)
 
 
@@ -55,41 +55,23 @@ def test_search_with_detector_filter(client, test_db):
     assert all(r["detector"] == "reentrancy-eth" for r in data["results"])
 
 
-def test_export_returns_402_without_payment(client, test_db):
-    _seed_api_data(test_db)
-    resp = client.post("/api/export", json={})
-    assert resp.status_code == 402
-    body = resp.json()
-    assert "payment_required" in body
-    assert "wallet" in body
-
-
-def test_export_returns_parquet_with_payment(client, test_db, tmp_path, monkeypatch):
+def test_export_returns_parquet(client, test_db, tmp_path, monkeypatch):
     _seed_api_data(test_db)
     monkeypatch.chdir(tmp_path)
     resp = client.post(
         "/api/export",
         json={"detector": "reentrancy-eth"},
-        headers={"X-Payment-Signed": "mock-sig-abc123"},
     )
     assert resp.status_code == 200
     assert resp.headers["content-type"] == "application/octet-stream"
     assert len(resp.content) > 0
 
 
-def test_mcp_returns_402_without_payment(client):
-    resp = client.post("/api/mcp", json={"tool": "search_vulnerabilities"})
-    assert resp.status_code == 402
-    body = resp.json()
-    assert "tools" in body
-
-
-def test_mcp_search_with_payment(client, test_db):
+def test_mcp_search(client, test_db):
     _seed_api_data(test_db)
     resp = client.post(
         "/api/mcp",
         json={"tool": "search_vulnerabilities", "args": {"detector": "reentrancy-eth"}},
-        headers={"X-Payment-Signed": "mock-sig"},
     )
     assert resp.status_code == 200
     data = resp.json()
@@ -101,6 +83,5 @@ def test_mcp_unknown_tool(client):
     resp = client.post(
         "/api/mcp",
         json={"tool": "nonexistent"},
-        headers={"X-Payment-Signed": "mock-sig"},
     )
     assert resp.status_code == 404

@@ -10,6 +10,15 @@ import {
   type PaymentChallenge,
 } from "@/lib/api";
 
+function triggerDownload(blob: Blob) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "benchmark.parquet";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 const CHAINS = [
   { id: "1", name: "Ethereum Mainnet" },
   { id: "137", name: "Polygon" },
@@ -83,40 +92,20 @@ export default function Home() {
 
   async function handleExport() {
     setPaymentChallenge(null);
-    const result = await exportSlice({
-      detector: detectorFilter || undefined,
-      min_severity: severityFilter || undefined,
-    });
-    if (result.challenge) {
-      setPaymentChallenge(result.challenge);
-      return;
-    }
-    if (result.blob) {
-      const url = URL.createObjectURL(result.blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "benchmark.parquet";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-  }
-
-  async function handleMockPay() {
-    const result = await exportSlice(
-      {
+    try {
+      const result = await exportSlice({
         detector: detectorFilter || undefined,
         min_severity: severityFilter || undefined,
-      },
-      "mock-payment-sig-" + Date.now()
-    );
-    setPaymentChallenge(null);
-    if (result.blob) {
-      const url = URL.createObjectURL(result.blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "benchmark.parquet";
-      a.click();
-      URL.revokeObjectURL(url);
+      });
+      if (result.challenge) {
+        setPaymentChallenge(result.challenge);
+        return;
+      }
+      if (result.blob) {
+        triggerDownload(result.blob);
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Export failed");
     }
   }
 
@@ -312,20 +301,17 @@ export default function Home() {
               <div className="mb-6 bg-yellow-900/20 border border-yellow-700 rounded-lg p-5">
                 <h3 className="font-medium text-yellow-300 mb-2">Payment Required (x402)</h3>
                 <p className="text-sm text-gray-300 mb-1">
-                  Cost: {paymentChallenge.payment_required}
+                  Cost: {paymentChallenge.maxAmountRequired || "0.01 USDC"}
                 </p>
                 <p className="text-sm text-gray-400 mb-1 font-mono">
-                  Wallet: {paymentChallenge.wallet}
+                  Pay to: {paymentChallenge.payTo || "N/A"}
                 </p>
                 <p className="text-sm text-gray-400 mb-3">
-                  Network: {paymentChallenge.network}
+                  Network: {paymentChallenge.network || "Base Sepolia"}
                 </p>
-                <button
-                  onClick={handleMockPay}
-                  className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-sm font-medium"
-                >
-                  Simulate Payment &amp; Download
-                </button>
+                <p className="text-xs text-gray-500">
+                  Set <code>NEXT_PUBLIC_WALLET_PRIVATE_KEY</code> with a funded Base Sepolia wallet to pay automatically.
+                </p>
               </div>
             )}
 

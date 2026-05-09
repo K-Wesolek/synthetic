@@ -1,19 +1,77 @@
-import json
+import os
 from pathlib import Path
 
 import duckdb
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 from backend.db import DB_PATH, get_connection, init_db
 from backend.ingest import ingest_contract
 from backend.query import build_benchmark_slice, search_vulnerabilities
 
+# x402 configuration via environment
+X402_PAY_TO = os.environ.get("X402_PAY_TO", "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18")
+X402_NETWORK = os.environ.get("X402_NETWORK", "eip155:84532")  # Base Sepolia default
+X402_FACILITATOR = os.environ.get("X402_FACILITATOR_URL", "https://x402.org/facilitator")
+X402_PRICE_EXPORT = os.environ.get("X402_PRICE_EXPORT", "$0.01")
+X402_PRICE_MCP = os.environ.get("X402_PRICE_MCP", "$0.001")
 
-def create_app(con: duckdb.DuckDBPyConnection | None = None) -> FastAPI:
-    """Create the FastAPI application. Accepts an optional DuckDB connection for testing."""
+
+def _setup_x402(app: FastAPI) -> None:
+    """Register real x402 payment middleware on paid routes."""
+    from x402.http import FacilitatorConfig, HTTPFacilitatorClient, PaymentOption
+    from x402.http.middleware.fastapi import PaymentMiddlewareASGI
+    from x402.http.types import RouteConfig
+    from x402.mechanisms.evm.exact import ExactEvmServerScheme
+    from x402.server import x402ResourceServer
+
+    facilitator = HTTPFacilitatorClient(FacilitatorConfig(url=X402_FACILITATOR))
+    server = x402ResourceServer(facilitator)
+    server.register("eip155:*", ExactEvmServerScheme())
+
+    routes: dict[str, RouteConfig] = {
+        "POST /api/export": RouteConfig(
+            accepts=[
+                PaymentOption(
+                    scheme="exact",
+                    pay_to=X402_PAY_TO,
+                    price=X402_PRICE_EXPORT,
+                    network=X402_NETWORK,
+                ),
+            ],
+            mime_type="application/octet-stream",
+            description="Export benchmark slice as Parquet",
+        ),
+        "POST /api/mcp": RouteConfig(
+            accepts=[
+                PaymentOption(
+                    scheme="exact",
+                    pay_to=X402_PAY_TO,
+                    price=X402_PRICE_MCP,
+                    network=X402_NETWORK,
+                ),
+            ],
+            mime_type="application/json",
+            description="MCP tool invocation",
+        ),
+    }
+
+    app.add_middleware(PaymentMiddlewareASGI, routes=routes, server=server)
+
+
+def create_app(
+    con: duckdb.DuckDBPyConnection | None = None,
+    enable_x402: bool = True,
+) -> FastAPI:
+    """Create the FastAPI application.
+
+    Args:
+        con: Optional DuckDB connection (for testing).
+        enable_x402: If True, add real x402 payment middleware on /api/export and /api/mcp.
+                     Set to False in tests so endpoints are freely accessible.
+    """
     app = FastAPI(title="EVM Security Atlas", version="0.1.0")
 
     app.add_middleware(
@@ -22,6 +80,9 @@ def create_app(con: duckdb.DuckDBPyConnection | None = None) -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    if enable_x402:
+        _setup_x402(app)
 
     def _get_db() -> duckdb.DuckDBPyConnection:
         if con is not None:
@@ -49,7 +110,7 @@ def create_app(con: duckdb.DuckDBPyConnection | None = None) -> FastAPI:
             raise HTTPException(status_code=502, detail=str(exc))
         return result
 
-    # -- Search findings --
+    # -- Search findings (free) --
     @app.get("/api/search")
     def search(
         detector: str | None = Query(None),
@@ -66,24 +127,14 @@ def create_app(con: duckdb.DuckDBPyConnection | None = None) -> FastAPI:
         )
         return {"count": len(results), "results": results}
 
-    # -- Export (x402 gated) --
+    # -- Export (x402 gated in production) --
     class ExportRequest(BaseModel):
         detector: str | None = None
         min_severity: str | None = None
         chain_id: str | None = None
 
     @app.post("/api/export")
-    def export_slice(body: ExportRequest, request: Request):
-        if not request.headers.get("X-Payment-Signed"):
-            return JSONResponse(
-                status_code=402,
-                content={
-                    "payment_required": "0.01 USDC on Base",
-                    "wallet": "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18",
-                    "network": "base",
-                    "message": "Sign payment to download benchmark slice",
-                },
-            )
+    def export_slice(body: ExportRequest):
         path = build_benchmark_slice(
             _get_db(),
             detector=body.detector,
@@ -92,7 +143,7 @@ def create_app(con: duckdb.DuckDBPyConnection | None = None) -> FastAPI:
         )
         return FileResponse(path, filename=Path(path).name, media_type="application/octet-stream")
 
-    # -- MCP endpoint (x402 gated) --
+    # -- MCP endpoint (x402 gated in production) --
     class MCPRequest(BaseModel):
         tool: str
         args: dict = {}
@@ -113,17 +164,7 @@ def create_app(con: duckdb.DuckDBPyConnection | None = None) -> FastAPI:
     }
 
     @app.post("/api/mcp")
-    def mcp_handler(body: MCPRequest, request: Request):
-        if not request.headers.get("X-Payment-Signed"):
-            return JSONResponse(
-                status_code=402,
-                content={
-                    "payment_required": "0.01 USDC on Base",
-                    "wallet": "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18",
-                    "tools": list(TOOL_REGISTRY.keys()),
-                },
-            )
-
+    def mcp_handler(body: MCPRequest):
         handler = TOOL_REGISTRY.get(body.tool)
         if handler is None:
             raise HTTPException(status_code=404, detail=f"Unknown tool: {body.tool}")
