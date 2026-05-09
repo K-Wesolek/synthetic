@@ -97,3 +97,66 @@ def run_slither_analysis(sources: dict) -> list[dict]:
             ]
         except (json.JSONDecodeError, KeyError):
             return []
+
+
+from backend.db import (
+    get_contract,
+    get_findings_for_contract,
+    insert_contract,
+    insert_finding,
+)
+
+
+def ingest_contract(
+    con,
+    chain_id: str,
+    address: str,
+) -> dict:
+    """Fetch, analyze, and store a contract. Returns cached data if already ingested.
+
+    Returns dict with keys: contract (dict), findings (list[dict]).
+    """
+    existing = get_contract(con, chain_id, address)
+    if existing is not None:
+        findings = get_findings_for_contract(con, existing["id"])
+        return {"contract": existing, "findings": findings}
+
+    data = fetch_verified_contract(chain_id, address)
+
+    compilation = data.get("compilation", {})
+    settings = compilation.get("compilerSettings", {})
+    optimizer = settings.get("optimizer", {})
+
+    contract_id = insert_contract(
+        con,
+        address=address,
+        chain_id=chain_id,
+        contract_name=compilation.get("name"),
+        compiler_version=compilation.get("compilerVersion"),
+        language=compilation.get("language", "Solidity"),
+        optimizer_enabled=optimizer.get("enabled"),
+        optimizer_runs=optimizer.get("runs"),
+        abi=data.get("abi"),
+        metadata=data.get("metadata"),
+        storage_layout=data.get("storage_layout"),
+    )
+
+    slither_findings = run_slither_analysis(data.get("sources", {}))
+
+    stored_findings = []
+    for f in slither_findings:
+        fid = insert_finding(
+            con,
+            contract_id=contract_id,
+            detector=f["detector"],
+            severity=f["severity"],
+            confidence=f.get("confidence"),
+            description=f.get("description"),
+            first_markdown_element=f.get("first_markdown_element"),
+        )
+        f["id"] = fid
+        f["contract_id"] = contract_id
+        stored_findings.append(f)
+
+    contract = get_contract(con, chain_id, address)
+    return {"contract": contract, "findings": stored_findings}
