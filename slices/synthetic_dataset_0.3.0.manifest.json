@@ -1,0 +1,23 @@
+{
+  "dataset_version": "0.3.0",
+  "taxonomy_version": "1",
+  "generated_at": "2026-05-09T23:05:10.268949Z",
+  "counts": {
+    "contracts": 41,
+    "findings": 98,
+    "incidents": 297,
+    "synthetic_cases": 32
+  },
+  "schema": [
+    "address",
+    "chain_id",
+    "contract_name",
+    "finding_id",
+    "detector",
+    "severity",
+    "confidence",
+    "description"
+  ],
+  "slice": "synthetic_cases",
+  "rows": 32
+}

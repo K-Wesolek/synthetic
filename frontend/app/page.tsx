@@ -1,72 +1,202 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   fetchContract,
+  fetchStats,
   searchFindings,
   exportSlice,
   type ContractInfo,
   type Finding,
   type PaymentChallenge,
+  type Stats,
 } from "@/lib/api";
+import Dashboard from "./components/Dashboard";
+import Synthetic from "./components/Synthetic";
+import Contracts from "./components/Contracts";
+import X402Connect from "./components/X402Connect";
+import ContractDetail from "./components/ContractDetail";
+import { SeverityBadge, fmtUSDCompact, fmtInt, InfoTip, SectionIntro } from "./components/ui";
+import { ENTITY_DESCRIPTIONS } from "@/lib/glossary";
 
-function triggerDownload(blob: Blob) {
+function triggerDownload(blob: Blob, name = "benchmark.parquet") {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "benchmark.parquet";
+  a.download = name;
   a.click();
   URL.revokeObjectURL(url);
 }
 
 const CHAINS = [
-  { id: "1", name: "Ethereum Mainnet" },
+  { id: "1", name: "Ethereum" },
   { id: "137", name: "Polygon" },
-  { id: "42161", name: "Arbitrum One" },
+  { id: "42161", name: "Arbitrum" },
   { id: "10", name: "Optimism" },
   { id: "8453", name: "Base" },
 ];
 
-const SEVERITY_COLORS: Record<string, string> = {
-  High: "bg-red-100 text-red-800",
-  Medium: "bg-yellow-100 text-yellow-800",
-  Low: "bg-blue-100 text-blue-800",
-  Informational: "bg-gray-100 text-gray-700",
-  Optimization: "bg-green-100 text-green-800",
-};
+type Tab =
+  | "dashboard"
+  | "lookup"
+  | "browse"
+  | "synthetic"
+  | "contracts"
+  | "x402";
 
-function SeverityBadge({ severity }: { severity: string }) {
-  const color = SEVERITY_COLORS[severity] || "bg-gray-100 text-gray-700";
+const TABS: { id: Tab; label: string; hint: string }[] = [
+  { id: "dashboard", label: "Atlas", hint: "Vulnerability landscape over the substrate" },
+  { id: "contracts", label: "Catalog", hint: "Indexed contracts and historical incidents" },
+  { id: "synthetic", label: "Synthetic", hint: "Generated vulnerable / patched pairs" },
+  { id: "lookup", label: "Lookup", hint: "Inspect a single contract" },
+  { id: "browse", label: "Findings", hint: "Search the finding index" },
+  { id: "x402", label: "Agents", hint: "x402 + MCP — paid endpoints" },
+];
+
+function HeroStat({
+  label,
+  value,
+  hint,
+  tone,
+  info,
+  infoTitle,
+  infoAlign = "start",
+}: {
+  label: string;
+  value: string;
+  hint?: string;
+  tone?: "default" | "danger";
+  info?: string;
+  infoTitle?: string;
+  infoAlign?: "start" | "center" | "end";
+}) {
   return (
-    <span className={`px-2 py-0.5 rounded text-xs font-medium ${color}`}>
-      {severity}
-    </span>
+    <div className="flex flex-col gap-1.5 min-w-[7rem]">
+      <span className="text-2xs uppercase tracking-wider text-fg-tertiary inline-flex items-center gap-1.5">
+        {label}
+        {info && <InfoTip title={infoTitle || label} body={info} align={infoAlign} />}
+      </span>
+      <span
+        className={`font-mono text-3xl md:text-[2.25rem] leading-none font-medium tabular-nums ${
+          tone === "danger" ? "text-sev-high" : "text-fg-primary"
+        }`}
+      >
+        {value}
+      </span>
+      {hint && (
+        <span className="text-xs text-fg-tertiary">{hint}</span>
+      )}
+    </div>
+  );
+}
+
+function Hero({ stats }: { stats: Stats | null }) {
+  return (
+    <header className="border-b border-border pb-10 mb-8">
+      <div className="flex items-start justify-between gap-4 mb-8">
+        <div className="flex items-center gap-2 font-mono text-xs text-fg-tertiary uppercase tracking-widest">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-sev-opt" />
+          atlas / evm security
+        </div>
+        <div className="font-mono text-2xs text-fg-tertiary">
+          backend{" "}
+          <span className="text-fg-secondary">
+            {process.env.NEXT_PUBLIC_API_URL || "127.0.0.1:8000"}
+          </span>
+          {stats && (
+            <>
+              <span className="mx-2 text-fg-muted">·</span>
+              dataset{" "}
+              <span className="text-fg-secondary">
+                v{(stats as Stats & { dataset_version?: string }).dataset_version || "0.3.0"}
+              </span>
+            </>
+          )}
+        </div>
+      </div>
+
+      <h1 className="font-serif-display text-4xl md:text-5xl text-fg-primary max-w-3xl leading-[1.05]">
+        Vulnerability landscape over verified Sourcify contracts.
+      </h1>
+      <p className="text-fg-secondary mt-4 max-w-2xl text-[15px] leading-relaxed">
+        An indexed substrate of verified contracts, anchored on historical
+        post-mortems and projected forward as synthesized vulnerable / patched
+        pairs. Agent-accessible through x402 + MCP.
+      </p>
+
+      <div className="mt-10 grid grid-cols-2 md:grid-cols-5 gap-x-8 gap-y-6">
+        <HeroStat
+          label="Contracts"
+          value={stats ? fmtInt(stats.totals.contracts) : "—"}
+          hint="verified, indexed"
+          info={ENTITY_DESCRIPTIONS.contracts}
+        />
+        <HeroStat
+          label="Findings"
+          value={stats ? fmtInt(stats.totals.findings) : "—"}
+          hint="static + heuristic"
+          info={ENTITY_DESCRIPTIONS.findings}
+        />
+        <HeroStat
+          label="Incidents"
+          value={stats ? fmtInt(stats.totals.incidents) : "—"}
+          hint="historical anchors"
+          info={ENTITY_DESCRIPTIONS.incidents}
+        />
+        <HeroStat
+          label="Synthetic"
+          value={stats ? fmtInt(stats.totals.synthetic_cases) : "—"}
+          hint="vuln + patch pairs"
+          info={ENTITY_DESCRIPTIONS.synthetic}
+        />
+        <HeroStat
+          label="Loss reported"
+          value={stats ? fmtUSDCompact(stats.totals.total_loss_usd) : "—"}
+          hint="USD on tracked incidents"
+          tone="danger"
+          info={ENTITY_DESCRIPTIONS.loss}
+          infoAlign="end"
+        />
+      </div>
+    </header>
   );
 }
 
 export default function Home() {
+  const [tab, setTab] = useState<Tab>("dashboard");
+  const [stats, setStats] = useState<Stats | null>(null);
+
+  useEffect(() => {
+    const handler = () => setTab("x402");
+    window.addEventListener("atlas:goto-x402", handler);
+    return () => window.removeEventListener("atlas:goto-x402", handler);
+  }, []);
+
+  useEffect(() => {
+    fetchStats().then(setStats).catch(() => {});
+  }, []);
+
+  // Lookup state
   const [chainId, setChainId] = useState("1");
   const [address, setAddress] = useState("");
   const [contract, setContract] = useState<ContractInfo | null>(null);
-  const [findings, setFindings] = useState<Finding[]>([]);
-  const [allFindings, setAllFindings] = useState<Finding[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Browse state
+  const [allFindings, setAllFindings] = useState<Finding[]>([]);
   const [detectorFilter, setDetectorFilter] = useState("");
   const [severityFilter, setSeverityFilter] = useState("");
   const [paymentChallenge, setPaymentChallenge] = useState<PaymentChallenge | null>(null);
-  const [tab, setTab] = useState<"lookup" | "browse">("lookup");
 
-  async function handleSearch() {
+  async function handleLookup() {
     if (!address.trim()) return;
     setLoading(true);
     setError(null);
     setContract(null);
-    setFindings([]);
     try {
       const result = await fetchContract(chainId, address.trim());
       setContract(result.contract);
-      setFindings(result.findings);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Unknown error");
     } finally {
@@ -101,64 +231,63 @@ export default function Home() {
         setPaymentChallenge(result.challenge);
         return;
       }
-      if (result.blob) {
-        triggerDownload(result.blob);
-      }
+      if (result.blob) triggerDownload(result.blob);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Export failed");
     }
   }
 
   return (
-    <main className="min-h-screen bg-gray-950 text-gray-100">
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        {/* Header */}
-        <h1 className="text-3xl font-bold mb-2">EVM Security Atlas</h1>
-        <p className="text-gray-400 mb-8">
-          Vulnerability intelligence over verified Sourcify contracts
-        </p>
+    <main className="min-h-screen bg-canvas text-fg-primary">
+      <div className="max-w-7xl mx-auto px-6 pt-10 pb-20">
+        <Hero stats={stats} />
 
         {/* Tabs */}
-        <div className="flex gap-4 mb-6 border-b border-gray-800">
-          <button
-            className={`pb-2 px-1 text-sm font-medium ${
-              tab === "lookup"
-                ? "text-blue-400 border-b-2 border-blue-400"
-                : "text-gray-500 hover:text-gray-300"
-            }`}
-            onClick={() => setTab("lookup")}
-          >
-            Contract Lookup
-          </button>
-          <button
-            className={`pb-2 px-1 text-sm font-medium ${
-              tab === "browse"
-                ? "text-blue-400 border-b-2 border-blue-400"
-                : "text-gray-500 hover:text-gray-300"
-            }`}
-            onClick={() => {
-              setTab("browse");
-              if (allFindings.length === 0) handleBrowse();
-            }}
-          >
-            Browse Findings
-          </button>
-        </div>
+        <nav className="flex gap-6 mb-8 border-b border-border overflow-x-auto -mx-1 px-1">
+          {TABS.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={`group relative pb-3 text-sm whitespace-nowrap transition-colors ${
+                tab === t.id
+                  ? "text-fg-primary"
+                  : "text-fg-tertiary hover:text-fg-secondary"
+              }`}
+              title={t.hint}
+            >
+              {t.label}
+              <span
+                className={`absolute -bottom-px left-0 right-0 h-px transition-colors ${
+                  tab === t.id ? "bg-fg-primary" : "bg-transparent"
+                }`}
+              />
+            </button>
+          ))}
+        </nav>
 
         {error && (
-          <div className="bg-red-900/30 border border-red-700 text-red-300 px-4 py-3 rounded mb-6">
+          <div className="bg-sev-high-bg border border-sev-high/40 text-sev-high px-4 py-3 rounded text-sm mb-6">
             {error}
           </div>
         )}
 
-        {/* Contract Lookup Tab */}
+        {tab === "dashboard" && <Dashboard />}
+        {tab === "synthetic" && <Synthetic />}
+        {tab === "contracts" && <Contracts />}
+        {tab === "x402" && <X402Connect />}
+
         {tab === "lookup" && (
           <>
-            <div className="flex gap-3 mb-6">
+            <SectionIntro
+              tags={["per-contract", "score · sources · neighbors"]}
+              title="Lookup."
+              description="Inspect a single verified contract: aggregated risk score, every detector finding with confidence, source files with detector markers inlined, storage layout, plus the contracts and historical incidents that share its vulnerability classes."
+            />
+            <div className="flex gap-2 mb-6 flex-wrap">
               <select
                 value={chainId}
                 onChange={(e) => setChainId(e.target.value)}
-                className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm"
+                className="bg-surface-2 border border-border rounded px-3 py-2 text-sm text-fg-primary focus:border-border-strong outline-none"
               >
                 {CHAINS.map((c) => (
                   <option key={c.id} value={c.id}>
@@ -170,113 +299,52 @@ export default function Home() {
                 type="text"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                placeholder="0x contract address..."
-                className="flex-1 bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm font-mono"
-                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                placeholder="0x… contract address"
+                className="flex-1 min-w-[300px] bg-surface-2 border border-border rounded px-3 py-2 text-sm font-mono text-fg-primary placeholder:text-fg-muted focus:border-border-strong outline-none"
+                onKeyDown={(e) => e.key === "Enter" && handleLookup()}
               />
               <button
-                onClick={handleSearch}
+                onClick={handleLookup}
                 disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-6 py-2 rounded text-sm font-medium"
+                className="bg-fg-primary text-canvas hover:bg-fg-secondary disabled:opacity-50 px-5 py-2 rounded text-sm font-medium transition-colors"
               >
-                {loading ? "Loading..." : "Lookup"}
+                {loading ? "Loading…" : "Lookup"}
               </button>
             </div>
 
-            {contract && (
-              <div className="mb-6 bg-gray-900 border border-gray-800 rounded-lg p-5">
-                <h2 className="text-lg font-semibold mb-3">
-                  {contract.contract_name || "Unknown Contract"}
-                </h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                  <div>
-                    <span className="text-gray-500">Address</span>
-                    <p className="font-mono text-xs mt-1 truncate">{contract.address}</p>
-                  </div>
-                  <div>
-                    <span className="text-gray-500">Chain</span>
-                    <p className="mt-1">{CHAINS.find(c => c.id === contract.chain_id)?.name || contract.chain_id}</p>
-                  </div>
-                  <div>
-                    <span className="text-gray-500">Compiler</span>
-                    <p className="mt-1 font-mono text-xs">{contract.compiler_version || "N/A"}</p>
-                  </div>
-                  <div>
-                    <span className="text-gray-500">Optimizer</span>
-                    <p className="mt-1">
-                      {contract.optimizer_enabled
-                        ? `Enabled (${contract.optimizer_runs} runs)`
-                        : "Disabled"}
-                    </p>
-                  </div>
-                </div>
-
-                {contract.storage_layout &&
-                  typeof contract.storage_layout === "object" &&
-                  "storage" in contract.storage_layout &&
-                  Array.isArray((contract.storage_layout as Record<string, unknown>).storage) &&
-                  ((contract.storage_layout as Record<string, unknown[]>).storage).length > 0 && (
-                    <details className="mt-4">
-                      <summary className="text-gray-400 cursor-pointer text-sm">
-                        Storage Layout ({((contract.storage_layout as Record<string, unknown[]>).storage).length} slots)
-                      </summary>
-                      <pre className="mt-2 text-xs bg-gray-950 p-3 rounded overflow-auto max-h-48">
-                        {JSON.stringify(contract.storage_layout, null, 2)}
-                      </pre>
-                    </details>
-                  )}
+            {!contract && !loading && (
+              <div className="border border-dashed border-border rounded-lg p-8 text-center text-fg-tertiary text-sm">
+                Enter a verified contract address. Returns metadata, scoring,
+                detector findings, source, storage layout, similar contracts and
+                related incidents.
               </div>
             )}
 
-            {findings.length > 0 && (
-              <div className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden">
-                <div className="px-5 py-3 border-b border-gray-800">
-                  <h3 className="font-medium">
-                    Findings ({findings.length})
-                  </h3>
-                </div>
-                <table className="w-full text-sm">
-                  <thead className="bg-gray-800/50">
-                    <tr>
-                      <th className="text-left px-5 py-2 text-gray-400">Detector</th>
-                      <th className="text-left px-5 py-2 text-gray-400">Severity</th>
-                      <th className="text-left px-5 py-2 text-gray-400">Confidence</th>
-                      <th className="text-left px-5 py-2 text-gray-400">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {findings.map((f, i) => (
-                      <tr key={i} className="border-t border-gray-800/50 hover:bg-gray-800/30">
-                        <td className="px-5 py-3 font-mono text-xs">{f.detector}</td>
-                        <td className="px-5 py-3"><SeverityBadge severity={f.severity} /></td>
-                        <td className="px-5 py-3 text-gray-400">{f.confidence || "N/A"}</td>
-                        <td className="px-5 py-3 text-gray-300 text-xs">{f.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+            {contract?.id && <ContractDetail contractId={contract.id} />}
           </>
         )}
 
-        {/* Browse Findings Tab */}
         {tab === "browse" && (
           <>
-            <div className="flex gap-3 mb-6 flex-wrap">
+            <SectionIntro
+              tags={["finding index", "exportable"]}
+              title="Findings."
+              description="The flat finding stream. Filter by detector or minimum severity; results stream live JSON. Use Export Parquet to materialize a reproducible benchmark slice — paid through x402, $0.01 USDC per slice."
+            />
+            <div className="flex gap-2 mb-6 flex-wrap">
               <input
                 type="text"
                 value={detectorFilter}
                 onChange={(e) => setDetectorFilter(e.target.value)}
-                placeholder="Filter by detector (e.g. reentrancy-eth)..."
-                className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm flex-1 min-w-[200px]"
+                placeholder="detector (e.g. reentrancy-eth)"
+                className="bg-surface-2 border border-border rounded px-3 py-2 text-sm flex-1 min-w-[220px] font-mono text-fg-primary placeholder:text-fg-muted focus:border-border-strong outline-none"
               />
               <select
                 value={severityFilter}
                 onChange={(e) => setSeverityFilter(e.target.value)}
-                className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm"
+                className="bg-surface-2 border border-border rounded px-3 py-2 text-sm text-fg-primary focus:border-border-strong outline-none"
               >
-                <option value="">All Severities</option>
+                <option value="">all severities</option>
                 <option value="High">High+</option>
                 <option value="Medium">Medium+</option>
                 <option value="Low">Low+</option>
@@ -284,64 +352,108 @@ export default function Home() {
               <button
                 onClick={handleBrowse}
                 disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-6 py-2 rounded text-sm font-medium"
+                className="bg-fg-primary text-canvas hover:bg-fg-secondary disabled:opacity-50 px-5 py-2 rounded text-sm font-medium transition-colors"
               >
-                {loading ? "Searching..." : "Search"}
+                {loading ? "Searching…" : "Search"}
               </button>
               <button
                 onClick={handleExport}
-                className="bg-emerald-600 hover:bg-emerald-700 px-6 py-2 rounded text-sm font-medium"
+                className="border border-border-strong text-fg-secondary hover:text-fg-primary hover:border-fg-tertiary px-5 py-2 rounded text-sm font-medium transition-colors"
+                title="x402-gated — pay $0.01 per slice"
               >
                 Export Parquet
+                <span className="ml-2 text-2xs uppercase tracking-wider text-fg-tertiary">
+                  paid
+                </span>
               </button>
             </div>
 
-            {/* x402 Payment Modal */}
             {paymentChallenge && (
-              <div className="mb-6 bg-yellow-900/20 border border-yellow-700 rounded-lg p-5">
-                <h3 className="font-medium text-yellow-300 mb-2">Payment Required (x402)</h3>
-                <p className="text-sm text-gray-300 mb-1">
-                  Cost: {paymentChallenge.maxAmountRequired || "0.01 USDC"}
-                </p>
-                <p className="text-sm text-gray-400 mb-1 font-mono">
-                  Pay to: {paymentChallenge.payTo || "N/A"}
-                </p>
-                <p className="text-sm text-gray-400 mb-3">
-                  Network: {paymentChallenge.network || "Base Sepolia"}
-                </p>
-                <p className="text-xs text-gray-500">
-                  Set <code>NEXT_PUBLIC_WALLET_PRIVATE_KEY</code> with a funded Base Sepolia wallet to pay automatically.
+              <div className="mb-6 bg-sev-medium-bg border border-sev-medium/30 rounded-lg p-4 text-sm">
+                <div className="text-sev-medium font-medium mb-2">
+                  402 Payment Required
+                </div>
+                <div className="font-mono text-xs space-y-1 text-fg-secondary">
+                  <div>
+                    price{" "}
+                    <span className="text-fg-primary">
+                      {paymentChallenge.maxAmountRequired || "0.01 USDC"}
+                    </span>
+                  </div>
+                  <div>
+                    network{" "}
+                    <span className="text-fg-primary">
+                      {paymentChallenge.network || "Base Sepolia"}
+                    </span>
+                  </div>
+                  <div className="break-all">
+                    pay-to{" "}
+                    <span className="text-fg-primary">{paymentChallenge.payTo}</span>
+                  </div>
+                </div>
+                <p className="text-xs text-fg-tertiary mt-3">
+                  Set <code className="font-mono text-fg-secondary">NEXT_PUBLIC_WALLET_PRIVATE_KEY</code>{" "}
+                  with a funded Base Sepolia wallet to auto-pay on retry.
                 </p>
               </div>
             )}
 
+            {allFindings.length === 0 && !loading && (
+              <div className="border border-dashed border-border rounded-lg p-8 text-center text-fg-tertiary text-sm">
+                Filter and search the finding index. Results stream as JSON;
+                Export → Parquet for benchmark slices.
+              </div>
+            )}
+
             {allFindings.length > 0 && (
-              <div className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden">
-                <div className="px-5 py-3 border-b border-gray-800">
-                  <h3 className="font-medium">
-                    Results ({allFindings.length})
+              <div className="bg-surface border border-border rounded-lg overflow-hidden">
+                <div className="px-5 py-3 border-b border-border flex items-baseline justify-between">
+                  <h3 className="text-sm font-medium">
+                    Findings{" "}
+                    <span className="text-fg-tertiary font-mono">
+                      ({fmtInt(allFindings.length)})
+                    </span>
                   </h3>
                 </div>
                 <table className="w-full text-sm">
-                  <thead className="bg-gray-800/50">
+                  <thead className="bg-surface-2">
                     <tr>
-                      <th className="text-left px-5 py-2 text-gray-400">Contract</th>
-                      <th className="text-left px-5 py-2 text-gray-400">Address</th>
-                      <th className="text-left px-5 py-2 text-gray-400">Detector</th>
-                      <th className="text-left px-5 py-2 text-gray-400">Severity</th>
-                      <th className="text-left px-5 py-2 text-gray-400">Description</th>
+                      <th className="text-left px-5 py-2.5 text-2xs uppercase text-fg-tertiary font-medium">
+                        Contract
+                      </th>
+                      <th className="text-left px-5 py-2.5 text-2xs uppercase text-fg-tertiary font-medium">
+                        Address
+                      </th>
+                      <th className="text-left px-5 py-2.5 text-2xs uppercase text-fg-tertiary font-medium">
+                        Detector
+                      </th>
+                      <th className="text-left px-5 py-2.5 text-2xs uppercase text-fg-tertiary font-medium">
+                        Severity
+                      </th>
+                      <th className="text-left px-5 py-2.5 text-2xs uppercase text-fg-tertiary font-medium">
+                        Description
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {allFindings.map((f, i) => (
-                      <tr key={i} className="border-t border-gray-800/50 hover:bg-gray-800/30">
-                        <td className="px-5 py-3 text-xs">{f.contract_name || "Unknown"}</td>
-                        <td className="px-5 py-3 font-mono text-xs truncate max-w-[120px]">
-                          {f.address}
+                      <tr
+                        key={i}
+                        className="even:bg-surface-3/70 hover:bg-surface-3/60 transition-colors"
+                      >
+                        <td className="px-5 py-2.5 text-fg-secondary">
+                          {f.contract_name || "—"}
                         </td>
-                        <td className="px-5 py-3 font-mono text-xs">{f.detector}</td>
-                        <td className="px-5 py-3"><SeverityBadge severity={f.severity} /></td>
-                        <td className="px-5 py-3 text-gray-300 text-xs max-w-xs truncate">
+                        <td className="px-5 py-2.5 font-mono text-xs text-fg-tertiary truncate max-w-[160px]">
+                          {f.address?.slice(0, 10)}…{f.address?.slice(-4)}
+                        </td>
+                        <td className="px-5 py-2.5 font-mono text-xs">
+                          {f.detector}
+                        </td>
+                        <td className="px-5 py-2.5">
+                          <SeverityBadge severity={f.severity} />
+                        </td>
+                        <td className="px-5 py-2.5 text-fg-secondary text-xs max-w-md truncate">
                           {f.description}
                         </td>
                       </tr>

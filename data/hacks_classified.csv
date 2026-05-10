@@ -1,0 +1,282 @@
+name,date,amount_usd,chain,original_classification,original_technique,vulnerability_class,layer,exploitability,confidence,notes
+TrustedVolumes,1778112000,6700000,Ethereum,Protocol Logic,Forged RFQ Orders,signature_replay,solidity_source,direct_drain,medium,Forged/replayed RFQ order signatures bypassing validation
+SmartCredit,1777852800,72000,Ethereum,Protocol Logic,Flashloan Exploit,flashloan_abuse,protocol_logic,direct_drain,low,Flashloan vector without specific oracle/accounting detail
+Sharwa.Finance,1777593600,32850,Arbitrum,Protocol Logic,Oracle Price Manipulation,oracle_manipulation,protocol_logic,direct_drain,high,Direct oracle price manipulation
+Wasabi Perps,1777507200,5500000,"Ethereum, Base, Berachain, Blast",Protocol Logic,Admin Key Compromised,access_control,solidity_source,privilege_escalation,low,Admin key compromise borderline excluded category but kept as access_control
+Syndicate,1777420800,380000,Base,Protocol Logic,Commons Bridge Exploit,authz_bypass,integration,direct_drain,low,Bridge integration flaw bypassed authorization
+Quant,1777334400,138000,Ethereum,Protocol Logic,Access Control Exploit,access_control,solidity_source,direct_drain,high,Explicit access control failure
+JUDAO,1777334400,228000,BSC,Protocol Logic,Flashloan Exploit,flashloan_abuse,protocol_logic,direct_drain,low,Generic flashloan exploit no oracle specified
+Singularity Finance,1777248000,413000,Base,Protocol Logic,Oracle Misconfiguration Exploit,oracle_manipulation,protocol_logic,direct_drain,high,Oracle misconfiguration exploited
+ZetaChain,1777248000,300000,"Ethereum, Base, Polygon, Arbitrum, Avalanche, BSC",Protocol Logic,GatewayEVM Contracts Exploit,authz_bypass,integration,direct_drain,medium,Gateway/bridge contract authorization bypass
+Purrlend,1777075200,1500000,"MegaETH, Hyperliquid L1",Protocol Logic,Fake Bridge Address,authz_bypass,integration,direct_drain,medium,Fake bridge sender/address bypassed validation
+Giddy,1776902400,1300000,Ethereum,Protocol Logic,Incomplete EIP-712 Signature Coverage,signature_replay,solidity_source,direct_drain,high,EIP-712 signature missing fields enables replay/forge
+Kipseli,1776816000,80000,Base,Protocol Logic,Flawed Quoting Logic,accounting_error,protocol_logic,direct_drain,medium,Flawed quote/pricing math
+Thetanuts Finance,1776643200,50000,Ethereum,Protocol Logic,First Depositor Attack,precision_rounding,protocol_logic,dilution,high,Classic first depositor share inflation
+Juicebox V3,1776643200,52000,Ethereum,Protocol Logic,borrowFrom Spoof Attack,authz_bypass,solidity_source,direct_drain,medium,Spoofed caller in borrowFrom
+Rhea Lend,1776297600,18400000,Near,Protocol Logic,Fake Collateral Exploit,accounting_error,protocol_logic,direct_drain,medium,Fake collateral accepted by lending logic
+MONA,1776038400,60950,BSC,Protocol Logic,BurnAddress Accounting Exploit,accounting_error,protocol_logic,direct_drain,high,Burn address accounting bug
+Dango,1776038400,410000,Dango,Protocol Logic,Donate Negative Amounts Hack,accounting_error,protocol_logic,direct_drain,high,Negative donation amount underflow accounting
+SubQuery Network,1775952000,60000,Base,Protocol Logic,Acces Control Exploit,access_control,solidity_source,direct_drain,high,Access control failure
+Hyperbridge,1775952000,2500000,"Ethereum, Base, BSC, Arbitrum",Protocol Logic,Fake State Proof,authz_bypass,integration,direct_drain,medium,Fake state proof bypassed bridge verification
+Aethir,1775692800,423000,BSC,Protocol Logic,Acces Control Exploit,access_control,solidity_source,direct_drain,high,Access control failure
+BSC TMM/USDT,1775260800,1665000,BSC,Protocol Logic,Reserve Manipulation Attack,oracle_manipulation,protocol_logic,direct_drain,medium,Reserve/price manipulation in pool
+Silo V2,1775174400,392000,Arbitrum,Protocol Logic,Misconfigured Oracle Exploit,oracle_manipulation,protocol_logic,direct_drain,high,Misconfigured oracle
+LML/USDT staking protocol,1774915200,950000,BSC,Protocol Logic,Price Manipulation Attack,oracle_manipulation,protocol_logic,direct_drain,high,Price manipulation
+Cyrus Finance,1774137600,5000000,BSC,Protocol Logic,Flashloan Pool Shares Exploit,precision_rounding,protocol_logic,direct_drain,medium,Flashloan to manipulate share accounting
+dTRINITY dLEND,1773705600,257000,Ethereum,Protocol Logic,Deposit Inflation Attack,precision_rounding,protocol_logic,dilution,high,Share/deposit inflation attack
+Venus Core Pool,1773532800,3700000,BSC,Protocol Logic,Donation Attack,precision_rounding,protocol_logic,direct_drain,high,Donation/share inflation attack on vault
+Goose Finance,1773446400,8435,BSC,Protocol Logic,Share Accounting Flaw,accounting_error,protocol_logic,direct_drain,high,Share accounting flaw
+Aave V3,1773273600,862000,Ethereum,Ecosystem,CAPO Oracle Misconfiguration,oracle_manipulation,protocol_logic,direct_drain,high,CAPO oracle misconfiguration
+Stake DAO,1773273600,176000,"Arbitrum, Base",Protocol Logic,Oracle Message Spoofing,oracle_manipulation,integration,direct_drain,high,Spoofed cross-chain oracle message
+Gondi V3,1773014400,230000,Ethereum,Protocol Logic,PurchaseBundler Exploit,authz_bypass,solidity_source,direct_drain,low,Bundler contract authorization bypass
+Molt EVM,1772841600,127000,Base,Protocol Logic,onlySpawnerToken Modifier Hack,access_control,solidity_source,direct_drain,high,Bypass of onlySpawnerToken modifier
+SolvBTC,1772755200,2700000,Ethereum,Protocol Logic,Mint Reserves Logic Exploit,accounting_error,protocol_logic,direct_drain,medium,Mint/reserve accounting bug
+Curve LlamaLend,1772409600,240000,Ethereum,Protocol Logic,Donation Attack,precision_rounding,protocol_logic,direct_drain,high,Donation share-inflation attack
+FOOM Cash,1772409600,2260000,"Ethereum, Base",Protocol Logic,Fake Proof Spam,authz_bypass,solidity_source,direct_drain,medium,Fake proofs accepted by verifier
+Wise Lending V2,1772236800,66000,"Arbitrum, Ethereum",Protocol Logic,Flashloan Exploit,flashloan_abuse,protocol_logic,direct_drain,low,Flashloan exploit no specific vector
+Ploutos Money,1772064000,390000,Ethereum,Protocol Logic,Misconfigured Oracle Exploit,oracle_manipulation,protocol_logic,direct_drain,high,Oracle misconfiguration
+DGLD,1771804800,0,Base,Protocol Logic,Infinite Mint and Dump,access_control,solidity_source,direct_drain,medium,Unrestricted mint then dump
+Veil Cash,1771632000,5000,Base,Protocol Logic,misconfigured Groth16 verifier,other,solidity_source,direct_drain,medium,Misconfigured ZK Groth16 verifier accepts invalid proofs
+Moonwell Lending,1771113600,1780000,Base,Protocol Logic,cbETH Collateral Exploit,oracle_manipulation,protocol_logic,direct_drain,medium,cbETH collateral pricing exploit
+Revert Lend,1769644800,50000,Base,Protocol Logic,Staked Collateral Exploit,accounting_error,protocol_logic,direct_drain,low,Staked collateral accounting issue
+Matcha,1769299200,13430000,"Base, Ethereum",Protocol Logic,Unlimited Approval Exploit,access_control,solidity_source,direct_drain,medium,Abuse of unlimited approval router
+Aperture LM,1769299200,3200000,"Ethereum, Base, BSC",Protocol Logic,,other,protocol_logic,direct_drain,low,No technique provided in source data
+Saga,1768953600,7000000,Saga,Protocol Logic,Infinite Mint and Dump,access_control,solidity_source,direct_drain,medium,Unrestricted mint
+Makina,1768780800,4200000,Ethereum,Protocol Logic,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Flashloan-driven oracle manipulation
+YO Protocol,1768262400,3730000,Ethereum,Protocol Logic,Slippage Exploit,accounting_error,protocol_logic,direct_drain,medium,Missing/insufficient slippage check
+Truebit,1767830400,26400000,Ethereum,Protocol Logic,Bonding Curve Exploit,accounting_error,tokenomics,direct_drain,medium,Bonding curve math flaw
+Polycule,1767744000,230000,Polygon,Protocol Logic,,other,protocol_logic,direct_drain,low,No technique data provided
+Fusion by IPOR,1767657600,336000,Arbitrum,Protocol Logic,EIP-7702 Delegation Exploit,authz_bypass,integration,direct_drain,medium,EIP-7702 delegation abused for auth bypass
+TMX TRIBE,1767571200,1400000,Arbitrum,Protocol Logic,Mint & Stake Loop Exploit,accounting_error,tokenomics,direct_drain,medium,Mint-stake loop accounting/incentive abuse
+PRXVT,1767225600,97000,Base,Protocol Logic,Sybil Attack with CREATE2 Addresses,other,tokenomics,dilution,medium,Sybil farming via CREATE2 to bypass per-address caps
+Unleash Protocol,1767052800,3900000,Story,Protocol Logic,Multisig Governance Hack,governance_capture,protocol_logic,governance_capture,medium,Multisig governance compromised
+MSCST,1766880000,129900,BSC,Protocol Logic,Atomic Sandwich Attack,oracle_manipulation,protocol_logic,direct_drain,medium,Sandwich/price manipulation in single tx
+Flow,1766793600,3900000,Flow,Protocol Logic,mint-and-dump Hack,access_control,solidity_source,direct_drain,medium,Unrestricted mint then dump
+Rari Capital,1766016000,2000000,Ethereum,Protocol Logic,Uninitialized Proxy Hijack,initialization_bug,proxy_storage,privilege_escalation,high,Uninitialized proxy/implementation hijack
+FutureSwap,1765843200,270000,Ethereum,Protocol Logic,Flashloan Governance Attack,governance_capture,protocol_logic,governance_capture,high,Flashloan to capture governance vote
+Yearn Finance,1765843200,300000,Ethereum,Protocol Logic,misconfigured Fulcrum sUSD strategy,accounting_error,integration,direct_drain,medium,Misconfigured strategy integration
+0G Labs,1765411200,516000,0G,Protocol Logic,emergencyWithdraw Function Exploit,access_control,solidity_source,direct_drain,high,Open emergencyWithdraw missing access check
+US Permissionless Dollar,1764806400,1000000,Ethereum,Protocol Logic,"""CPIMP"" proxy front-run",initialization_bug,proxy_storage,privilege_escalation,medium,Proxy initialization front-run
+Yearn Ether,1764460800,9000000,Ethereum,Protocol Logic,yETH stablepool Exploit,accounting_error,protocol_logic,direct_drain,low,Stablepool accounting/exchange-rate exploit
+Port3 Network,1763856000,166000,BSC,Protocol Logic,Infinite Mint and Dump,access_control,solidity_source,direct_drain,medium,Unrestricted mint
+Impermax V3,1762819200,380000,Base,Protocol Logic,Zero-Rate Hack,accounting_error,protocol_logic,direct_drain,medium,Zero interest rate accounting bug
+Moonwell Lending,1762214400,1000000,"Base, Optimism",Protocol Logic,Oracle Price Feed Manipulation,oracle_manipulation,protocol_logic,direct_drain,high,Oracle price feed manipulation
+Balancer V2,1762128000,128000000,"Ethereum, Arbitrum, Base, Polygon, Sonic, Optimism",Protocol Logic,Composable Stable Pools Exploit,precision_rounding,protocol_logic,direct_drain,medium,Composable stable pool rounding/invariant exploit
+Sharwa.Finance,1760918400,146000,Arbitrum,Protocol Logic,Price Manipulation Attack,oracle_manipulation,protocol_logic,direct_drain,high,Price manipulation
+Astera.fi,1759968000,573000,Linea,Protocol Logic,Oracle Price Feed Manipulation,oracle_manipulation,protocol_logic,direct_drain,high,Oracle feed manipulation
+Abracadabra Spell,1759536000,1700000,Ethereum,Protocol Logic,Sequential State Manipulation Exploit,accounting_error,protocol_logic,direct_drain,medium,Sequential state mutation across calls
+Hyperdrive HL,1758931200,773000,Hyperliquid L1,Protocol Logic,Router Exploit,authz_bypass,solidity_source,direct_drain,low,Router contract auth/validation bypass
+UXLINK,1758499200,11300000,"Ethereum, Arbitrum",Protocol Logic,Delegatecall Exploit,authz_bypass,solidity_source,privilege_escalation,high,Delegatecall to attacker logic
+Shibarium,1757721600,3000000,Shibarium,Protocol Logic,Validator Stake Manipulation by Flashloan,governance_capture,protocol_logic,governance_capture,medium,Flashloan to manipulate validator stake/voting
+Bunni V2,1756771200,8400000,"Ethereum, Unichain",Protocol Logic,Liquidity Distribution Function Exploit,precision_rounding,protocol_logic,direct_drain,medium,Liquidity distribution math/rounding flaw
+Cozy V2,1756512000,427000,Optimism,Protocol Logic,Insufficient Sender Verification Exploit,access_control,solidity_source,direct_drain,high,Missing msg.sender verification
+BetterBank,1756166400,5000000,PulseChain,Protocol Logic,Infinite Mint and Dump,access_control,solidity_source,direct_drain,medium,Unrestricted mint
+Panoptic V1.1,1756080000,0,"Base, Unichain, Ethereum",Protocol Logic,,other,protocol_logic,direct_drain,low,No technique data provided
+Coinbase,1755043200,300000,Ethereum,Ecosystem,MEV composability attack,other,integration,direct_drain,low,MEV-driven composability attack across protocols
+numa.,1754784000,320000,Sonic,Protocol Logic,NumaVault Exploit,accounting_error,protocol_logic,direct_drain,low,Vault accounting flaw insufficient detail
+SuperRare,1753660800,730000,Ethereum,Protocol Logic,updateMerkleRoot Access Control Exploit,access_control,solidity_source,direct_drain,high,Open updateMerkleRoot function
+Arcadia V2,1752537600,2500000,Base,Protocol Logic,Rebalancer contract reentrancy hack,reentrancy,solidity_source,direct_drain,high,Reentrancy in rebalancer contract
+Kinto Bridge,1752105600,1550000,Arbitrum,Protocol Logic,ERC1967Proxy Backdoor Hijack,upgradeability_flaw,proxy_storage,privilege_escalation,high,Backdoored proxy upgrade hijack
+GMX V1 Perps,1752019200,42000000,Arbitrum,Protocol Logic,Re-entrancy Exploit,reentrancy,solidity_source,direct_drain,high,Reentrancy exploit
+Peapods Finance,1751932800,175000,Ethereum,Ecosystem,Oracle manipulation in user-created Pods,oracle_manipulation,protocol_logic,direct_drain,high,Oracle manipulation in user-created pods
+Silo Finance,1750809600,546000,Ethereum,Protocol Logic,fillQuote silo.borrow() Exploit,authz_bypass,solidity_source,direct_drain,medium,fillQuote allowed unauthorized borrow
+Resupply,1750809600,9600000,Ethereum,Protocol Logic,Price Oracle Manipulation,oracle_manipulation,protocol_logic,direct_drain,high,Oracle manipulation
+Cork V1,1748390400,12000000,Ethereum,Protocol Logic,Access control bypass via hook,access_control,solidity_source,direct_drain,high,Hook used to bypass access control
+Usual USD0,1748304000,43000,Ethereum,Protocol Logic,Arbitration Exploit,accounting_error,protocol_logic,direct_drain,low,Arbitration/redemption logic flaw
+Dexodus Finance,1748217600,300000,Base,Protocol Logic,Price Manipulation Attack,oracle_manipulation,protocol_logic,direct_drain,high,Price manipulation
+Zunami Protocol,1747267200,500000,Ethereum,Protocol Logic,withdrawStuckToken() exploit,access_control,solidity_source,direct_drain,high,Open withdrawStuckToken admin function
+Mobius Token,1746921600,2160000,BSC,Protocol Logic,Decimal Miscalculation Exploit,precision_rounding,solidity_source,direct_drain,high,Decimal/precision miscalculation
+Impermax V3,1745625600,300000,Base,Protocol Logic,Flashloan Exploit,flashloan_abuse,protocol_logic,direct_drain,low,Flashloan exploit no specific vector
+Bitcoin Mission,1745280000,1300000,Arbitrum,Protocol Logic,overPaper Function Exploit,access_control,solidity_source,direct_drain,low,Unrestricted overPaper function
+KiloEx,1744588800,7500000,"BSC, Base, Taiko",Protocol Logic,Price Oracle Manipulation,oracle_manipulation,protocol_logic,direct_drain,high,Oracle price manipulation
+Tenderize V2,1743984000,10850,Ethereum,Protocol Logic,Proxy Upgrade Skim,upgradeability_flaw,proxy_storage,direct_drain,medium,Proxy upgrade used to skim funds
+UPCX,1743465600,0,Ethereum,Protocol Logic,Upgraded ProxyAdmin + withdrawByAdmin Hack,upgradeability_flaw,proxy_storage,privilege_escalation,high,ProxyAdmin upgrade enabled withdrawByAdmin
+SIR,1743292800,355000,Ethereum,Protocol Logic,Transient storage collision,storage_collision,solidity_source,direct_drain,high,Transient storage slot collision
+Venus Core Pool,1743206400,902000,zkSync Era,Protocol Logic,Donation Attack,precision_rounding,protocol_logic,direct_drain,high,Donation share inflation attack
+Abracadabra Spell,1742860800,13000000,Arbitrum,Protocol Logic,,other,protocol_logic,direct_drain,low,No technique data provided
+1inch,1741305600,5000000,Ethereum,Protocol Logic,Calldata underflow and resolver hijack,authz_bypass,solidity_source,direct_drain,medium,Calldata parsing underflow enabling resolver hijack
+Hegic(old contract),1740787200,94000,Ethereum,Protocol Logic,Unlimited repeated withdrawal exploit,accounting_error,solidity_source,direct_drain,high,Missing balance update on withdrawal
+four.meme,1739232000,183000,BSC,Protocol Logic,Liquidity Pool Exploit,accounting_error,protocol_logic,direct_drain,low,LP logic exploit insufficient detail
+Ionic Protocol,1738627200,4000000,Mode,Protocol Logic,Fake Collateral Exploit,accounting_error,protocol_logic,direct_drain,medium,Fake collateral accepted
+Sirio Finance,1738368000,2000000,Hedera,Protocol Logic,Flashloan Exploit,flashloan_abuse,protocol_logic,direct_drain,low,Flashloan exploit no specific vector
+Unilend V2,1736640000,197600,Ethereum,Protocol Logic,Redeem Process Exploit,accounting_error,protocol_logic,direct_drain,medium,Redeem flow accounting bug allowed draining
+MoonHacker,1735776000,300000,Optimism,Protocol Logic,Unchecked FlashLoan Approve Exploit,access_control,solidity_source,direct_drain,medium,Unchecked approve in flashloan callback indicates missing validation
+Fegex,1735430400,900000,"Ethereum, BSC, Base",Protocol Logic,Missing Access Control,access_control,solidity_source,direct_drain,high,Explicit missing access control
+Vestra DAO,1733270400,500000,Ethereum,Protocol Logic,Staking Logic Exploit,accounting_error,protocol_logic,direct_drain,low,"Staking logic bug,  exact mechanism unclear"
+DeltaPrime,1731283200,4800000,"Arbitrum, Avalanche",Protocol Logic,Debt Swap Exploit,accounting_error,protocol_logic,direct_drain,medium,Debt-swap accounting flaw
+Radiant V2,1729036800,53000000,"BSC, Arbitrum",Protocol Logic,Access Control Exploit,access_control,solidity_source,privilege_escalation,high,Multisig/admin compromise via access control
+LeadBlock's Morpho Blue Market,1728864000,250000,Ethereum,Protocol Logic,Oracle Misconfiguration Exploit,oracle_manipulation,integration,direct_drain,high,Oracle misconfig in market params
+Lava,1728000000,130000,Arbitrum,Protocol Logic,Flashloan Exploit,flashloan_abuse,protocol_logic,direct_drain,low,"Generic flashloan exploit,  no oracle context"
+uniBTC,1727308800,1700000,Ethereum,Protocol Logic,Minting Logic Exploit,accounting_error,solidity_source,direct_drain,medium,Minting logic flaw allowed unauthorized mint
+Onyx V2,1727308800,4000000,Ethereum,Protocol Logic,Liquidation Logic Exploit,liquidation_bug,protocol_logic,direct_drain,high,Liquidation logic bug
+OcelotDex,1726790400,4900000,Ethereum,Protocol Logic,Infinite Mint and Dump,access_control,solidity_source,direct_drain,medium,Infinite mint typically unprotected mint function
+WXETA,1726444800,110000,"Ethereum, BSC",Protocol Logic,Access Control Exploit,access_control,solidity_source,direct_drain,high,Access control bug
+Penpie,1725321600,27000000,Ethereum,Protocol Logic,Reentrancy,reentrancy,solidity_source,direct_drain,high,Classic reentrancy on Pendle market registration
+PolyNetwork,1723420800,5000000,PolyNetwork,Protocol Logic,Reentrancy,reentrancy,solidity_source,direct_drain,high,Reentrancy
+Nexera,1722988800,1800000,Ethereum,Protocol Logic,Ownership Override Attack,access_control,proxy_storage,privilege_escalation,medium,Ownership override suggests admin takeover
+Ronin Bridge,1722902400,12000000,Ethereum,Protocol Logic,MEV bot manipulation exploit,other,protocol_logic,direct_drain,low,MEV-bot manipulation; not a clean fit in taxonomy
+Convergence,1722470400,210000,Ethereum,Protocol Logic,Missing Input Validation,access_control,solidity_source,direct_drain,medium,Missing input validation enabling unauth action
+DeltaPrime,1721692800,1000000,Arbitrum,Protocol Logic,,accounting_error,protocol_logic,direct_drain,low,No technique field; likely accounting per first DeltaPrime hack
+Rho Markets,1721347200,7600000,Scroll,Protocol Logic,Price Oracle Manipulation,oracle_manipulation,integration,direct_drain,high,Oracle manipulation
+LiFi Finance,1721088000,9730000,"zkSync Era, Linea, Metis",Protocol Logic,Router Exploit via Infinite Approvals,access_control,solidity_source,direct_drain,high,Router did not validate calldata; abused approvals
+Minterest,1721001600,1400000,Mantle,Protocol Logic,Reentrancy,reentrancy,solidity_source,direct_drain,high,Reentrancy
+Dough Finance,1720742400,1960000,Ethereum,Protocol Logic,Unvalidated call data exploit,access_control,solidity_source,direct_drain,medium,Unvalidated calldata in external call
+OKX NFT Aggregator,1718841600,14000,BSC,Protocol Logic,Access Control Exploit,access_control,solidity_source,direct_drain,high,Access control bug
+Holograph,1718236800,6700000,Ethereum,Protocol Logic,Infinite Mint and Dump,access_control,solidity_source,direct_drain,medium,Infinite mint via missing access control
+UwU Lend,1718236800,3700000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,integration,direct_drain,high,Flashloan-driven oracle manipulation
+YOLO Games,1718064000,1500000,Blast,Protocol Logic,Access Control Exploit,access_control,solidity_source,direct_drain,high,Access control bug
+UwU Lend,1717977600,20000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,integration,direct_drain,high,Flashloan-driven oracle manipulation
+Velocore V2,1717286400,6800000,"Linea, zkSync Era",Protocol Logic,Fee Overflow Exploit,accounting_error,solidity_source,direct_drain,high,Fee calculation overflow
+Gala,1716163200,22000000,Ethereum,Protocol Logic,Infinite Mint and Dump,access_control,solidity_source,direct_drain,medium,Unprotected mint function
+Sonne Finance,1715731200,20000000,Optimism,Ecosystem,Flashloan Donate Function Logic Exploit,precision_rounding,protocol_logic,direct_drain,high,Compound-fork empty-market donation/share inflation
+Pike V1,1714435200,1600000,"Ethereum, Optimism, Arbitrum",Protocol Logic,Storage Misalignment Exploit,storage_collision,proxy_storage,direct_drain,high,Storage slot misalignment
+Yield Protocol,1714435200,181000,Arbitrum,Protocol Logic,Balance Disparity Exploit,accounting_error,protocol_logic,direct_drain,medium,Balance disparity accounting bug
+Magpie Protocol,1713830400,129000,"Ethereum, Polygon, BSC, Blast, Avalanche, Arbitrum, Optimism, Base, zkSync Era, Polygon zkEVM",Protocol Logic,Router Exploit,access_control,solidity_source,direct_drain,medium,Router exploit abusing approvals
+Hedgey,1713484800,44700000,"Arbitrum, Ethereum",Ecosystem,Claim Contract Flashloan Exploit,access_control,solidity_source,direct_drain,medium,Claim function lacked validation; flashloan vector
+Lava,1711670400,340000,Arbitrum,Protocol Logic,Calculation Error in Liquidation Engine,liquidation_bug,protocol_logic,direct_drain,high,Liquidation calc error
+PrismaLST,1711584000,11600000,Ethereum,Protocol Logic,Flashloan Trove Manipulation,accounting_error,protocol_logic,direct_drain,medium,Trove manipulation via flashloan
+Munchables,1711411200,62500000,Blast,Protocol Logic,Storage Slot Exploit,upgradeability_flaw,proxy_storage,privilege_escalation,high,Malicious upgrade via storage slot/init
+Curio,1711324800,16000000,Ethereum,Protocol Logic,Voting Power Inflation,governance_capture,protocol_logic,governance_capture,high,Voting power inflation took governance
+Super Sushi Samurai,1711065600,4800000,Blast,Protocol Logic,Infinite Mint and Dump,accounting_error,solidity_source,direct_drain,medium,Token transfer logic bug enabling balance duplication
+Dolomite,1710892800,1800000,Ethereum,Protocol Logic,Acces Control Exploit,access_control,solidity_source,direct_drain,high,Access control bug
+Unizen,1709856000,2100000,Ethereum,Protocol Logic,External Call Vulnerability,access_control,solidity_source,direct_drain,medium,Arbitrary external call without validation
+WOOFi Swap,1709596800,8500000,Arbitrum,Protocol Logic,Price Oracle Manipulation,oracle_manipulation,integration,direct_drain,high,sPMM oracle manipulation
+Seneca,1709078400,6500000,"Ethereum, Arbitrum",Protocol Logic,Token approval exploit,access_control,solidity_source,direct_drain,medium,Arbitrary call abusing approvals
+BlueBerry,1708732800,1400000,Ethereum,Protocol Logic,Flashloan Price Oracle Attack,oracle_manipulation,integration,direct_drain,high,Oracle manipulation via flashloan
+Tectonic,1708560000,250000,Cronos,Protocol Logic,Flashloan New Market Exploit,precision_rounding,protocol_logic,direct_drain,medium,Empty new market share inflation pattern
+Abracadabra Spell,1706572800,6500000,Ethereum,Protocol Logic,Borrow Logic Exploit,accounting_error,protocol_logic,direct_drain,medium,Borrow logic accounting flaw
+Bungee,1705363200,3300000,Ethereum,Protocol Logic,Missing Input Validation,access_control,solidity_source,direct_drain,medium,Router missing input validation
+Wise Lending V1,1705017600,464000,Ethereum,Protocol Logic,Rounding Donation Attack,precision_rounding,protocol_logic,direct_drain,high,Rounding/donation share inflation
+Gamma,1704326400,4500000,Arbitrum,Protocol Logic,Price Manipulation Attack,oracle_manipulation,integration,direct_drain,high,Price manipulation
+Radiant V2,1704153600,4500000,Arbitrum,Protocol Logic,Flashloan New Market Exploit,precision_rounding,protocol_logic,direct_drain,medium,Empty market share inflation
+Orbit Bridge,1703980800,81700000,Ethereum,Protocol Logic,Signature Exploit,signature_replay,solidity_source,direct_drain,medium,Bridge signature validation bug
+KyberSwap Elastic,1700611200,48000000,"Ethereum, Base, Polygon, Optimism, Arbitrum",Protocol Logic,Flashloan Swap Logic Exploit,accounting_error,protocol_logic,direct_drain,high,Tick-boundary precision/accounting bug in swap
+Raft,1699574400,3300000,Ethereum,Protocol Logic,Infinite Mint and Dump,precision_rounding,protocol_logic,direct_drain,medium,Rounding-based collateral inflation
+Onyx Protocol,1698796800,2100000,Ethereum,Ecosystem,Flashloan Donate Function Logic Exploit,precision_rounding,protocol_logic,direct_drain,high,Compound-fork empty-market donate/share inflation
+Unibot,1698710400,640000,Ethereum,Protocol Logic,Token approval exploit,access_control,solidity_source,direct_drain,medium,Arbitrary call abusing user approvals
+Platypus Finance,1697155200,2200000,Avalanche,Protocol Logic,Reentrancy,reentrancy,solidity_source,direct_drain,high,Reentrancy
+Arena SocialFi,1696636800,2900000,Avalanche,Protocol Logic,Reentrancy,reentrancy,solidity_source,direct_drain,high,Reentrancy
+Balancer V2,1693094400,800000,Ethereum,Protocol Logic,,precision_rounding,protocol_logic,direct_drain,low,No technique; Balancer V2 boosted-pool rounding incident
+Exactly,1692316800,7200000,Optimism,Protocol Logic,DebtManager Exploit,access_control,solidity_source,direct_drain,medium,DebtManager unvalidated calldata
+Zunami Protocol,1691884800,2100000,Ethereum,Ecosystem,Price Manipulation Attack,oracle_manipulation,integration,direct_drain,high,Curve LP price manipulation
+Earning.Farm,1691539200,540000,Ethereum,Protocol Logic,Reentrancy,reentrancy,solidity_source,direct_drain,high,Reentrancy
+LeetSwap,1690848000,620000,Base,Protocol Logic,Liquidity Pools Compromised,access_control,solidity_source,direct_drain,low,Pool compromised; mechanism unclear
+EraLend,1690243200,3400000,zkSync Era,Protocol Logic,Reentrancy,reentrancy,solidity_source,direct_drain,high,Read-only reentrancy via zkSync quirks
+Palmswap,1690156800,900000,BSC,Protocol Logic,Inflationary Accounting Manipulation,accounting_error,protocol_logic,direct_drain,medium,Inflationary accounting bug
+Conic Finance,1689984000,300000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,integration,direct_drain,high,Oracle manipulation via flashloan
+Conic Finance,1689897600,3200000,Ethereum,Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,Reentrancy via ETH transfer in handler
+Rodeo,1688428800,90000,Arbitrum,Protocol Logic,Mint Reserves Logic Exploit,accounting_error,protocol_logic,direct_drain,medium,Mint reserves accounting bug
+AzukiDAO,1688342400,68000,Ethereum,Protocol Logic,Replay Attack,signature_replay,solidity_source,direct_drain,high,Signature replay
+Themis Protocol,1687824000,370000,Arbitrum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,integration,direct_drain,high,Flashloan oracle manipulation
+Midas Capital,1686960000,600000,BSC,Protocol Logic,Redeem Rounding Error Exploit,precision_rounding,protocol_logic,direct_drain,high,Redeem rounding error
+Tropykus RSK,1686700800,150000,Rootstock,Protocol Logic,Redeem Rounding Error Exploit,precision_rounding,protocol_logic,direct_drain,high,Redeem rounding error
+Sturdy V1,1686528000,770000,Ethereum,Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,Reentrancy via flashloan
+Jimbos Protocol,1685232000,7500000,Arbitrum,Ecosystem,Flashloan Slippage Attack,accounting_error,protocol_logic,direct_drain,medium,Missing slippage protection on rebalance
+Local Traders,1684886400,118000,BSC,Protocol Logic,Access Control Exploit,access_control,solidity_source,direct_drain,high,Access control bug
+DEUS Finance,1683244800,6500000,"Arbitrum, BSC, Ethereum",Protocol Logic,Burn Function Mistake,access_control,solidity_source,direct_drain,medium,Burn function with wrong recipient/check
+Level Perps,1682899200,1000000,BSC,Protocol Logic,Referral Claims Logic Exploit,accounting_error,protocol_logic,direct_drain,medium,Referral claim double-counting
+0vix,1682640000,2000000,Polygon,Ecosystem,Flashloan Donate Function Logic Exploit,precision_rounding,protocol_logic,direct_drain,high,Compound-fork donate share inflation
+Hundred Finance,1681516800,7000000,Optimism,Protocol Logic,Flashloan Donate Function Logic Exploit,precision_rounding,protocol_logic,direct_drain,high,Compound-fork donate share inflation
+Yearn Finance,1681344000,11539000,Ethereum,Ecosystem,Flashloan Misconfiguration Exploit,initialization_bug,solidity_source,direct_drain,medium,iearn yUSDT misconfigured token in old contract
+SushiSwap,1681084800,3300000,"Ethereum, Arbitrum, Optimism, BSC",Protocol Logic,Missing Input Validation,access_control,solidity_source,direct_drain,high,RouteProcessor2 missing route validation
+Sentiment,1680566400,1000000,Arbitrum,Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,Read-only reentrancy via Balancer
+Safemoon,1679961600,8900000,BSC,Protocol Logic,Access Control Exploit,access_control,solidity_source,direct_drain,high,Public burn function lacked access control
+ParaSpace Lending V1,1679011200,5000000,Ethereum,Protocol Logic,Borrow Logic Exploit,accounting_error,protocol_logic,direct_drain,medium,Borrow logic accounting flaw
+Euler V1,1678665600,197000000,Ethereum,Protocol Logic,Flashloan Donate Function Logic Exploit,accounting_error,protocol_logic,direct_drain,high,donateToReserves missing health check
+Tender Finance,1678147200,1600000,Arbitrum,Ecosystem,Outdated Oracle Exploit,oracle_manipulation,integration,direct_drain,high,Stale/outdated oracle
+LaunchZone,1677456000,700000,BSC,Protocol Logic,Access Control Exploit,access_control,solidity_source,direct_drain,high,Access control bug
+Dexible V2,1676851200,2000000,"Ethereum, Arbitrum",Protocol Logic,Arbitrary External Call,access_control,solidity_source,direct_drain,high,Arbitrary external call abusing approvals
+Platypus Finance,1676505600,8500000,Avalanche,Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,Reentrancy via emergency withdraw missing solvency check
+dForce Lending,1675987200,3650000,"Arbitrum, Optimism",Protocol Logic,Reentrancy,reentrancy,solidity_source,direct_drain,high,Read-only reentrancy via Curve
+Orion Pools,1675296000,3000000,BSC,Protocol Logic,Reentrancy,reentrancy,solidity_source,direct_drain,high,Reentrancy
+BonqDAO,1675209600,1700000,Polygon,Protocol Logic,Price Oracle Attack,oracle_manipulation,integration,direct_drain,high,Tellor oracle manipulation
+Midas Capital,1673913600,660000,Polygon,Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,Reentrancy via flashloan
+LendHub,1673827200,6000000,Heco,Protocol Logic,Collateral Offboarding Mistake,accounting_error,protocol_logic,direct_drain,medium,Old market not properly offboarded
+Rubic,1671926400,1410000,Ethereum,Protocol Logic,Router Exploit,access_control,solidity_source,direct_drain,medium,Router abused approvals
+Lodestar V0,1670630400,6900000,Arbitrum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,integration,direct_drain,high,Flashloan oracle manipulation
+Ankr,1669939200,5000000,BSC,Protocol Logic,Access Control Exploit,access_control,solidity_source,direct_drain,high,Unprotected mint function (compromised key per public reports but tagged as AC)
+DFX V2,1668038400,4000000,Ethereum,Protocol Logic,Reentrancy,reentrancy,solidity_source,direct_drain,high,Reentrancy
+pNetwork,1667433600,4589449,BSC,Protocol Logic,Misconfiguration,other,protocol_logic,direct_drain,low,Generic misconfiguration; insufficient detail
+Team Finance,1666828800,15800000,Ethereum,Protocol Logic,Migrate Function Mistake Exploit,access_control,solidity_source,direct_drain,medium,Migrate function logic flaw
+Bond Protocol,1666310400,300000,Ethereum,Protocol Logic,Arbitrary External Call,access_control,solidity_source,direct_drain,high,Arbitrary external call vulnerability
+Moola Market,1666051200,8400000,Celo,Ecosystem,Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Price oracle manipulation against lending market collateral.
+TempleDAO,1665446400,2300000,Ethereum,Protocol Logic,Exploit Lack of Input Authentication,access_control,solidity_source,direct_drain,high,Missing access control on migrate function allowed arbitrary withdrawals.
+Sovryn,1664841600,1100000,RSK,Protocol Logic,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,Reentrancy via flashloan into lending pool.
+Transit Swap,1664668800,21000000,"Ethereum, BSC",Protocol Logic,Transfer Logic Exploit,access_control,solidity_source,direct_drain,high,Unchecked transferFrom callee allowed draining approvals.
+GMX V1 Perps,1663459200,565000,Arbitrum,Ecosystem,Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Spot oracle abuse on perps pricing.
+Nomad,1659312000,190000000,Ethereum,Protocol Logic,Trusted Root Exploit,initialization_bug,solidity_source,direct_drain,high,Initialization set zero trusted root making any message valid.
+Audius,1658707200,6000000,Ethereum,Protocol Logic,Malicious Governance Proposal,initialization_bug,proxy_storage,governance_capture,high,Proxy storage collision in initializer enabled hostile gov takeover.
+Inverse Finance Frontier,1655337600,5800000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Flashloan-driven oracle manipulation on lending collateral.
+Gym Network,1654646400,2100000,BSC,Protocol Logic,Deposit Function Exploit,access_control,solidity_source,direct_drain,medium,Deposit function lacked validation enabling unauthorized credit.
+Fortress Loans,1651968000,3000000,BSC,Protocol Logic,Governance and Oracle Exploit,oracle_manipulation,protocol_logic,direct_drain,high,Governance manipulated oracle to drain lending pool.
+Rari Capital,1651363200,80000000,"Ethereum, Arbitrum",Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,Fuse pool reentrancy via cross-function callback.
+Saddle Finance,1651276800,11000000,Ethereum,Ecosystem,Flashloan Swap Logic Exploit,accounting_error,protocol_logic,direct_drain,medium,Swap logic miscalculation exploited via flashloan.
+DEUS Finance,1651104000,13400000,Fantom,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Flashloan-manipulated DEX-spot oracle.
+Beanstalk,1650153600,181000000,Ethereum,Ecosystem,Flashloan Governance Attack,authz_bypass,protocol_logic,governance_capture,high,Flashloan-bought governance executed malicious proposal in same block.
+Elephant Money,1649721600,22200000,BSC,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Flashloan price oracle manipulation.
+Inverse Finance Frontier,1648857600,15600000,Ethereum,Ecosystem,Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Manipulated INV/DOLA oracle to drain market.
+Ola Finance,1648684800,4000000,Fuse,Smart Contract Language,Reentrancy,reentrancy,solidity_source,direct_drain,high,Compound-fork reentrancy on tokens with hooks.
+Revest Finance,1648339200,2010000,Ethereum,Smart Contract Language,Reentrancy,reentrancy,solidity_source,direct_drain,high,ERC1155 mint callback reentrancy.
+Agave,1647302400,5500000,Gnosis Chain,Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,ERC677 transferAndCall reentrancy in Aave fork.
+Hundred Finance,1647302400,6200000,Gnosis Chain,Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,Compound-fork reentrancy on ERC677 callbacks.
+Paraluni Masterchef,1647129600,1700000,BSC,Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,Reentrancy in masterchef deposit accounting.
+Fantasm Finance,1646784000,2260000,Fantom,Protocol Logic,Missing Condition Check,accounting_error,solidity_source,direct_drain,high,Mint accepted unbacked tokens due to missing check.
+Treasure,1646265600,1400000,Arbitrum,Protocol Logic,Buy Function Exploit,accounting_error,solidity_source,direct_drain,medium,Marketplace buy function failed to check quantity zero.
+Superfluid,1644278400,8700000,Polygon,Protocol Logic,CTX Exploit,authz_bypass,solidity_source,direct_drain,high,Forged ctx in agreement call bypassed host authorization.
+Meter,1644105600,7700000,Ethereum,Protocol Logic,Deposit Function Exploit,accounting_error,solidity_source,direct_drain,high,Bridge deposit credited tokens without actual transfer.
+Qubit,1643328000,80000000,BSC,Protocol Logic,Transfer Logic Exploit,accounting_error,solidity_source,direct_drain,high,Bridge deposit logic accepted zero-address ERC20 as native.
+Gamma,1640044800,8200000,Ethereum,Protocol Logic,Access Control Exploit,access_control,solidity_source,direct_drain,high,Missing access control on privileged function.
+Bent Finance,1640044800,1750000,Ethereum,Protocol Logic,User Balances Manually Updated,access_control,solidity_source,direct_drain,high,Owner-callable balance update abused to mint rewards.
+Grim Finance,1639785600,30000000,Fantom,Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,Vault deposit allowed arbitrary token reentrancy.
+MonoX,1638230400,31400000,"Ethereum, Polygon",Protocol Logic,Swap Function Exploit,accounting_error,protocol_logic,direct_drain,high,Self-swap inflated token price via shared accounting.
+ChainSwap,1636243200,4400000,"Ethereum, BSC",Protocol Logic,Exploit Weak Authentication Check,signature_replay,solidity_source,direct_drain,high,Bridge signature validation weak enabling forged claims.
+Vesper Finance,1635897600,3370000,Ethereum,Protocol Logic,Oracle Manipulation,oracle_manipulation,protocol_logic,direct_drain,high,Oracle manipulation on Vesper strategy.
+CREAM Lending,1635292800,130000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Manipulated yUSD price via flashloan.
+Indexed Finance,1634169600,16000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Index pool reweighting + flashloan price manipulation.
+Compound V2,1632873600,147000000,Ethereum,Protocol Logic,Math Mistake Exploit,accounting_error,solidity_source,direct_drain,high,Comptroller drip math error over-distributed COMP rewards.
+Vee Finance,1632182400,34000000,Avalanche,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Pangolin spot price oracle manipulation.
+NowSwap,1631664000,1000000,Ethereum,Protocol Logic,Inconsistent Value in Code,accounting_error,solidity_source,direct_drain,medium,Hardcoded constant inconsistent with pool config allowed drain.
+Zabu Finance,1631404800,3200000,Avalanche,Protocol Logic,Flashloan Exploit,accounting_error,protocol_logic,direct_drain,medium,Reward accounting bug exploited with flashloan deposit.
+DAO Maker Vesting,1630713600,4000000,Ethereum,Protocol Logic,Access Control Exploit,access_control,solidity_source,direct_drain,high,Missing onlyOwner on init function allowed reinit and drain.
+Siren,1630627200,3450000,Polygon,Smart Contract Language,Reentrancy,reentrancy,solidity_source,direct_drain,high,Reentrancy in AMM pool collateral handling.
+CREAM Lending,1630281600,18800000,Ethereum,Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,AMP token ERC777-style hook reentrancy.
+xToken,1630195200,4500000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Spot price oracle manipulation on Bancor pool.
+SurgeBNB,1629158400,4000000,BSC,Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,Reentrancy in token transfer rewards.
+Acala Network,1628812800,1600000,Acala,Protocol Logic,Incentives Function Mistake,accounting_error,protocol_logic,direct_drain,medium,Incentive distribution misconfiguration over-issued aUSD.
+Punk Protocol,1628553600,8950000,Ethereum,Smart Contract Language,Delegatecall Exploit,initialization_bug,solidity_source,direct_drain,high,Uninitialized Forge implementation allowed delegatecall hijack.
+Poly Network,1628553600,611000000,"Ethereum, BSC, Polygon",Protocol Logic,Access Control Exploit,access_control,solidity_source,privilege_escalation,high,Cross-chain manager allowed forging keeper role via crafted calldata.
+Popsicle Finance,1627948800,20000000,Ethereum,Ecosystem,Flashloan Incentive Rewards Exploit,accounting_error,solidity_source,direct_drain,high,Reward accounting on transfer let attacker double-claim fees.
+Thorchain DEX,1626912000,8000000,Ethereum,Protocol Logic,Refund Logic Exploit,accounting_error,protocol_logic,direct_drain,medium,Refund logic accepted spoofed asset metadata.
+Bunny,1626393600,2400000,BSC,Ecosystem,Flashloan Incentive Rewards Exploit,accounting_error,protocol_logic,direct_drain,medium,Reward minting based on manipulable balance.
+Thorchain DEX,1626307200,5000000,Ethereum,Protocol Logic,Over-ride Logic Exploit,accounting_error,protocol_logic,direct_drain,medium,Router override logic let attacker spoof deposits.
+Merlin,1624924800,330000,BSC,Protocol Logic,Incentive Rewards Exploit,accounting_error,protocol_logic,direct_drain,medium,Incentive reward minting bug.
+Safe Dollar,1624838400,248000,Polygon,Protocol Logic,Incentive Rewards Exploit,accounting_error,protocol_logic,direct_drain,medium,Reward distribution accounting flaw drained pool.
+Eleven Finance,1624320000,4500000,BSC,Ecosystem,Flashloan Burn Function Exploit,access_control,solidity_source,direct_drain,high,Public burn/withdraw function allowed arbitrary caller drain.
+Alchemix V2,1623801600,6500000,Ethereum,Protocol Logic,Borrow Logic Exploit,accounting_error,protocol_logic,frozen_funds,medium,Borrow logic mistake credited users with extra collateral.
+Belt Finance,1622246400,6300000,BSC,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Strategy share-price oracle manipulation via flashloan.
+Merlin,1621987200,550000,BSC,Protocol Logic,Math Mistake Exploit,accounting_error,protocol_logic,direct_drain,medium,Math mistake in reward calculation.
+Merlin,1621987200,680000,BSC,Ecosystem,Flashloan Incentive Rewards Exploit,accounting_error,protocol_logic,direct_drain,medium,Flashloan abused incentive reward accounting.
+Bunny,1621382400,45000000,BSC,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,LP price manipulation triggered inflated BUNNY mint.
+xToken,1620777600,24000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Spot price oracle manipulation on xSNX/xBNT.
+Rari Capital,1620432000,10000000,Ethereum,Protocol Logic,Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Oracle manipulation against Rari ETH pool via Alpha integration.
+ValueDefi,1620345600,11000000,BSC,Protocol Logic,Math Mistake Exploit,accounting_error,protocol_logic,direct_drain,medium,Math error in vault accounting.
+ValueDefi,1620172800,10000000,BSC,Protocol Logic,Access Control Exploit,access_control,solidity_source,direct_drain,high,Missing access control on privileged function.
+Spartan,1619913600,30500000,BSC,Ecosystem,Flashloan Pool Shares Exploit,accounting_error,protocol_logic,direct_drain,high,Faulty liquidity-share calculation manipulated via flashloan.
+Uranium Finance,1619568000,57200000,BSC,Protocol Logic,Math Mistake Exploit,accounting_error,solidity_source,direct_drain,high,Migration changed swap invariant constant incorrectly (10000 vs 1000).
+DEUS Finance,1615766400,3000000,Fantom,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Flashloan price oracle manipulation.
+DODO AMM,1615248000,2000000,Ethereum,Protocol Logic,Access Control Exploit,initialization_bug,solidity_source,direct_drain,high,Public init function on crowdpool re-callable to set malicious tokens.
+Furucombo,1614384000,14000000,Ethereum,Smart Contract Language,Delegatecall Exploit,authz_bypass,solidity_source,direct_drain,high,Delegatecall to attacker-controlled implementation drained approvals.
+Alpha Finance,1613174400,37500000,Ethereum,Ecosystem,Flashloan Pool Shares Exploit,accounting_error,protocol_logic,direct_drain,high,sUSD pool share accounting bug exploited via flashloan.
+Growth DeFi,1612828800,1300000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Flashloan-driven oracle manipulation.
+Yearn Finance,1612483200,11000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Curve pool virtual price manipulation via flashloan.
+Cover Protocol,1609200000,9400000,Ethereum,Protocol Logic,Incentives Function Mistake,accounting_error,solidity_source,dilution,high,Mint function memory/storage bug allowed infinite COVER mint.
+Warp Protocol,1608249600,7800000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,LP token price oracle manipulation.
+Pickle,1606003200,19700000,Ethereum,Protocol Logic,Vault Swap Exploit,accounting_error,protocol_logic,direct_drain,high,Vault swap accepted unauthorized jar exchange.
+Origin Protocol,1605571200,8000000,Ethereum,Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,Reentrancy on OUSD mint with fake stablecoin.
+ValueDefi,1605312000,7000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Curve oracle manipulation via flashloan.
+Akropolis,1605139200,2000000,Ethereum,Ecosystem,Flashloan Reentrancy Attack,reentrancy,solidity_source,direct_drain,high,Reentrancy via fake ERC20 in deposit.
+Harvest Finance,1603670400,25000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Curve Y-pool spot price manipulation via flashloan.
+Eminence,1601251200,15000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,oracle_manipulation,protocol_logic,direct_drain,high,Bonding curve price manipulation via flashloan.
+Lendf.me,1587254400,1200000,Ethereum,Smart Contract Language,Reentrancy,reentrancy,solidity_source,direct_drain,high,ERC777 imBTC reentrancy on supply function.
+Parity Multisig,1510185600,150000000,Ethereum,Protocol Logic,Contract not initialized,initialization_bug,solidity_source,frozen_funds,high,Library left uninitialized; attacker took ownership and self-destructed.
+The DAO,1466121600,60000000,Ethereum,Protocol Logic,Reentrancy,reentrancy,solidity_source,direct_drain,high,Classic reentrancy on splitDAO withdraw.

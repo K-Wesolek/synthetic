@@ -1,0 +1,30 @@
+name,date,amount_usd,chain,original_classification,original_technique,vulnerability_class,layer,exploitability,confidence,notes
+SmartCredit,1777852800,72000,Ethereum,Protocol Logic,Flashloan Exploit,flashloan_abuse,protocol_logic,direct_drain,low,Flashloan vector without specific oracle/accounting detail
+Wasabi Perps,1777507200,5500000,"Ethereum, Base, Berachain, Blast",Protocol Logic,Admin Key Compromised,access_control,solidity_source,privilege_escalation,low,Admin key compromise borderline excluded category but kept as access_control
+Syndicate,1777420800,380000,Base,Protocol Logic,Commons Bridge Exploit,authz_bypass,integration,direct_drain,low,Bridge integration flaw bypassed authorization
+JUDAO,1777334400,228000,BSC,Protocol Logic,Flashloan Exploit,flashloan_abuse,protocol_logic,direct_drain,low,Generic flashloan exploit no oracle specified
+Gondi V3,1773014400,230000,Ethereum,Protocol Logic,PurchaseBundler Exploit,authz_bypass,solidity_source,direct_drain,low,Bundler contract authorization bypass
+Wise Lending V2,1772236800,66000,"Arbitrum, Ethereum",Protocol Logic,Flashloan Exploit,flashloan_abuse,protocol_logic,direct_drain,low,Flashloan exploit no specific vector
+Veil Cash,1771632000,5000,Base,Protocol Logic,misconfigured Groth16 verifier,other,solidity_source,direct_drain,medium,Misconfigured ZK Groth16 verifier accepts invalid proofs
+Revert Lend,1769644800,50000,Base,Protocol Logic,Staked Collateral Exploit,accounting_error,protocol_logic,direct_drain,low,Staked collateral accounting issue
+Aperture LM,1769299200,3200000,"Ethereum, Base, BSC",Protocol Logic,,other,protocol_logic,direct_drain,low,No technique provided in source data
+Polycule,1767744000,230000,Polygon,Protocol Logic,,other,protocol_logic,direct_drain,low,No technique data provided
+PRXVT,1767225600,97000,Base,Protocol Logic,Sybil Attack with CREATE2 Addresses,other,tokenomics,dilution,medium,Sybil farming via CREATE2 to bypass per-address caps
+Yearn Ether,1764460800,9000000,Ethereum,Protocol Logic,yETH stablepool Exploit,accounting_error,protocol_logic,direct_drain,low,Stablepool accounting/exchange-rate exploit
+Hyperdrive HL,1758931200,773000,Hyperliquid L1,Protocol Logic,Router Exploit,authz_bypass,solidity_source,direct_drain,low,Router contract auth/validation bypass
+Panoptic V1.1,1756080000,0,"Base, Unichain, Ethereum",Protocol Logic,,other,protocol_logic,direct_drain,low,No technique data provided
+Coinbase,1755043200,300000,Ethereum,Ecosystem,MEV composability attack,other,integration,direct_drain,low,MEV-driven composability attack across protocols
+numa.,1754784000,320000,Sonic,Protocol Logic,NumaVault Exploit,accounting_error,protocol_logic,direct_drain,low,Vault accounting flaw insufficient detail
+Usual USD0,1748304000,43000,Ethereum,Protocol Logic,Arbitration Exploit,accounting_error,protocol_logic,direct_drain,low,Arbitration/redemption logic flaw
+Impermax V3,1745625600,300000,Base,Protocol Logic,Flashloan Exploit,flashloan_abuse,protocol_logic,direct_drain,low,Flashloan exploit no specific vector
+Bitcoin Mission,1745280000,1300000,Arbitrum,Protocol Logic,overPaper Function Exploit,access_control,solidity_source,direct_drain,low,Unrestricted overPaper function
+Abracadabra Spell,1742860800,13000000,Arbitrum,Protocol Logic,,other,protocol_logic,direct_drain,low,No technique data provided
+four.meme,1739232000,183000,BSC,Protocol Logic,Liquidity Pool Exploit,accounting_error,protocol_logic,direct_drain,low,LP logic exploit insufficient detail
+Sirio Finance,1738368000,2000000,Hedera,Protocol Logic,Flashloan Exploit,flashloan_abuse,protocol_logic,direct_drain,low,Flashloan exploit no specific vector
+Vestra DAO,1733270400,500000,Ethereum,Protocol Logic,Staking Logic Exploit,accounting_error,protocol_logic,direct_drain,low,"Staking logic bug,  exact mechanism unclear"
+Lava,1728000000,130000,Arbitrum,Protocol Logic,Flashloan Exploit,flashloan_abuse,protocol_logic,direct_drain,low,"Generic flashloan exploit,  no oracle context"
+Ronin Bridge,1722902400,12000000,Ethereum,Protocol Logic,MEV bot manipulation exploit,other,protocol_logic,direct_drain,low,MEV-bot manipulation; not a clean fit in taxonomy
+DeltaPrime,1721692800,1000000,Arbitrum,Protocol Logic,,accounting_error,protocol_logic,direct_drain,low,No technique field; likely accounting per first DeltaPrime hack
+Balancer V2,1693094400,800000,Ethereum,Protocol Logic,,precision_rounding,protocol_logic,direct_drain,low,No technique; Balancer V2 boosted-pool rounding incident
+LeetSwap,1690848000,620000,Base,Protocol Logic,Liquidity Pools Compromised,access_control,solidity_source,direct_drain,low,Pool compromised; mechanism unclear
+pNetwork,1667433600,4589449,BSC,Protocol Logic,Misconfiguration,other,protocol_logic,direct_drain,low,Generic misconfiguration; insufficient detail

@@ -1,3 +1,85 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Channel-form (r g b) so Tailwind's `/<alpha>` modifier works */
+  --canvas: 10 10 11;
+  --surface: 16 16 19;
+  --surface-2: 21 21 26;
+  --surface-3: 28 28 34;
+
+  --border: 34 34 42;
+  --border-strong: 44 44 54;
+
+  --fg-primary: 236 236 239;
+  --fg-secondary: 168 168 179;
+  --fg-tertiary: 110 110 122;
+  --fg-muted: 74 74 85;
+
+  --sev-high: 229 72 77;
+  --sev-medium: 245 165 36;
+  --sev-low: 234 179 8;
+  --sev-info: 139 139 151;
+  --sev-opt: 70 167 88;
+
+  --accent: 110 168 254;
+
+  /* Pre-baked low-alpha tints (used as solid backgrounds) */
+  --sev-high-bg: rgba(229, 72, 77, 0.10);
+  --sev-medium-bg: rgba(245, 165, 36, 0.10);
+  --sev-low-bg: rgba(234, 179, 8, 0.10);
+  --sev-info-bg: rgba(139, 139, 151, 0.10);
+  --sev-opt-bg: rgba(70, 167, 88, 0.10);
+  --accent-soft: rgba(110, 168, 254, 0.12);
+
+  --serif: "Charter", "Iowan Old Style", "Source Serif 4", "Source Serif Pro",
+    ui-serif, Georgia, Cambria, "Times New Roman", serif;
+}
+
+html,
+body {
+  background: rgb(rgb(var(--canvas)));
+  color: rgb(rgb(var(--fg-primary)));
+}
+
+body {
+  font-feature-settings: "ss01", "cv01", "cv11";
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tabular numerals everywhere data lives */
+.font-mono,
+[class*="tabular"] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scrollbars (subtle, non-distracting) */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgb(var(--border-strong));
+  border-radius: 5px;
+  border: 2px solid rgb(var(--canvas));
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--fg-muted));
+}
+
+/* Selection */
+::selection {
+  background: var(--accent-soft);
+  color: rgb(var(--fg-primary));
+}
+
+/* Headlines */
+.font-serif-display {
+  font-family: var(--serif);
+  font-feature-settings: "ss01";
+  letter-spacing: -0.02em;
+}

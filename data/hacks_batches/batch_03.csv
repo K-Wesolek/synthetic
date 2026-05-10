@@ -1,0 +1,82 @@
+Name,Date,Amount lost,Chains,Classification,Technique,Language
+Moola Market,1666051200,8400000,Celo,Ecosystem,Price Oracle Attack,Solidity
+TempleDAO,1665446400,2300000,Ethereum,Protocol Logic,Exploit Lack of Input Authentication,Solidity
+Sovryn,1664841600,1100000,RSK,Protocol Logic,Flashloan Reentrancy Attack,Solidity
+Transit Swap,1664668800,21000000,"Ethereum, BSC",Protocol Logic,Transfer Logic Exploit,Solidity
+GMX V1 Perps,1663459200,565000,Arbitrum,Ecosystem,Price Oracle Attack,Solidity
+Nomad,1659312000,190000000,Ethereum,Protocol Logic,Trusted Root Exploit,Solidity
+Audius,1658707200,6000000,Ethereum,Protocol Logic,Malicious Governance Proposal,Solidity
+Inverse Finance Frontier,1655337600,5800000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,Solidity
+Gym Network,1654646400,2100000,BSC,Protocol Logic,Deposit Function Exploit,Solidity
+Fortress Loans,1651968000,3000000,BSC,Protocol Logic,Governance and Oracle Exploit,Solidity
+Rari Capital,1651363200,80000000,"Ethereum, Arbitrum",Ecosystem,Flashloan Reentrancy Attack,Solidity
+Saddle Finance,1651276800,11000000,Ethereum,Ecosystem,Flashloan Swap Logic Exploit,Solidity
+DEUS Finance,1651104000,13400000,Fantom,Ecosystem,Flashloan Price Oracle Attack,Solidity
+Beanstalk,1650153600,181000000,Ethereum,Ecosystem,Flashloan Governance Attack,Solidity
+Elephant Money,1649721600,22200000,BSC,Ecosystem,Flashloan Price Oracle Attack,Solidity
+Inverse Finance Frontier,1648857600,15600000,Ethereum,Ecosystem,Price Oracle Attack,Solidity
+Ola Finance,1648684800,4000000,Fuse,Smart Contract Language,Reentrancy,Solidity
+Revest Finance,1648339200,2010000,Ethereum,Smart Contract Language,Reentrancy,Solidity
+Agave,1647302400,5500000,Gnosis Chain,Ecosystem,Flashloan Reentrancy Attack,Solidity
+Hundred Finance,1647302400,6200000,Gnosis Chain,Ecosystem,Flashloan Reentrancy Attack,Solidity
+Paraluni Masterchef,1647129600,1700000,BSC,Ecosystem,Flashloan Reentrancy Attack,Solidity
+Fantasm Finance,1646784000,2260000,Fantom,Protocol Logic,Missing Condition Check,Solidity
+Treasure,1646265600,1400000,Arbitrum,Protocol Logic,Buy Function Exploit,Solidity
+Superfluid,1644278400,8700000,Polygon,Protocol Logic,CTX Exploit,Solidity
+Meter,1644105600,7700000,Ethereum,Protocol Logic,Deposit Function Exploit,Solidity
+Qubit,1643328000,80000000,BSC,Protocol Logic,Transfer Logic Exploit,Solidity
+Gamma,1640044800,8200000,Ethereum,Protocol Logic,Access Control Exploit,Solidity
+Bent Finance,1640044800,1750000,Ethereum,Protocol Logic,User Balances Manually Updated,Solidity
+Grim Finance,1639785600,30000000,Fantom,Ecosystem,Flashloan Reentrancy Attack,Solidity
+MonoX,1638230400,31400000,"Ethereum, Polygon",Protocol Logic,Swap Function Exploit,Solidity
+ChainSwap,1636243200,4400000,"Ethereum, BSC",Protocol Logic,Exploit Weak Authentication Check,Solidity
+Vesper Finance,1635897600,3370000,Ethereum,Protocol Logic,Oracle Manipulation,Solidity
+CREAM Lending,1635292800,130000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,Solidity
+Indexed Finance,1634169600,16000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,Solidity
+Compound V2,1632873600,147000000,Ethereum,Protocol Logic,Math Mistake Exploit,Solidity
+Vee Finance,1632182400,34000000,Avalanche,Ecosystem,Flashloan Price Oracle Attack,Solidity
+NowSwap,1631664000,1000000,Ethereum,Protocol Logic,Inconsistent Value in Code,Solidity
+Zabu Finance,1631404800,3200000,Avalanche,Protocol Logic,Flashloan Exploit,Solidity
+DAO Maker Vesting,1630713600,4000000,Ethereum,Protocol Logic,Access Control Exploit,Solidity
+Siren,1630627200,3450000,Polygon,Smart Contract Language,Reentrancy,Solidity
+CREAM Lending,1630281600,18800000,Ethereum,Ecosystem,Flashloan Reentrancy Attack,Solidity
+xToken,1630195200,4500000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,Solidity
+SurgeBNB,1629158400,4000000,BSC,Ecosystem,Flashloan Reentrancy Attack,Solidity
+Acala Network,1628812800,1600000,Acala,Protocol Logic,Incentives Function Mistake,Solidity
+Punk Protocol,1628553600,8950000,Ethereum,Smart Contract Language,Delegatecall Exploit,Solidity
+Poly Network,1628553600,611000000,"Ethereum, BSC, Polygon",Protocol Logic,Access Control Exploit,Solidity
+Popsicle Finance,1627948800,20000000,Ethereum,Ecosystem,Flashloan Incentive Rewards Exploit,Solidity
+Thorchain DEX,1626912000,8000000,Ethereum,Protocol Logic,Refund Logic Exploit,Solidity
+Bunny,1626393600,2400000,BSC,Ecosystem,Flashloan Incentive Rewards Exploit,Solidity
+Thorchain DEX,1626307200,5000000,Ethereum,Protocol Logic,Over-ride Logic Exploit,Solidity
+Merlin,1624924800,330000,BSC,Protocol Logic,Incentive Rewards Exploit,Solidity
+Safe Dollar,1624838400,248000,Polygon,Protocol Logic,Incentive Rewards Exploit,Solidity
+Eleven Finance,1624320000,4500000,BSC,Ecosystem,Flashloan Burn Function Exploit,Solidity
+Alchemix V2,1623801600,6500000,Ethereum,Protocol Logic,Borrow Logic Exploit,Solidity
+Belt Finance,1622246400,6300000,BSC,Ecosystem,Flashloan Price Oracle Attack,Solidity
+Merlin,1621987200,550000,BSC,Protocol Logic,Math Mistake Exploit,Solidity
+Merlin,1621987200,680000,BSC,Ecosystem,Flashloan Incentive Rewards Exploit,Solidity
+Bunny,1621382400,45000000,BSC,Ecosystem,Flashloan Price Oracle Attack,Solidity
+xToken,1620777600,24000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,Solidity
+Rari Capital,1620432000,10000000,Ethereum,Protocol Logic,Price Oracle Attack,Solidity
+ValueDefi,1620345600,11000000,BSC,Protocol Logic,Math Mistake Exploit,Solidity
+ValueDefi,1620172800,10000000,BSC,Protocol Logic,Access Control Exploit,Solidity
+Spartan,1619913600,30500000,BSC,Ecosystem,Flashloan Pool Shares Exploit,Solidity
+Uranium Finance,1619568000,57200000,BSC,Protocol Logic,Math Mistake Exploit,Solidity
+DEUS Finance,1615766400,3000000,Fantom,Ecosystem,Flashloan Price Oracle Attack,Solidity
+DODO AMM,1615248000,2000000,Ethereum,Protocol Logic,Access Control Exploit,Solidity
+Furucombo,1614384000,14000000,Ethereum,Smart Contract Language,Delegatecall Exploit,Solidity
+Alpha Finance,1613174400,37500000,Ethereum,Ecosystem,Flashloan Pool Shares Exploit,Solidity
+Growth DeFi,1612828800,1300000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,Solidity
+Yearn Finance,1612483200,11000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,Solidity
+Cover Protocol,1609200000,9400000,Ethereum,Protocol Logic,Incentives Function Mistake,Solidity
+Warp Protocol,1608249600,7800000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,Solidity
+Pickle,1606003200,19700000,Ethereum,Protocol Logic,Vault Swap Exploit,Solidity
+Origin Protocol,1605571200,8000000,Ethereum,Ecosystem,Flashloan Reentrancy Attack,Solidity
+ValueDefi,1605312000,7000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,Solidity
+Akropolis,1605139200,2000000,Ethereum,Ecosystem,Flashloan Reentrancy Attack,Solidity
+Harvest Finance,1603670400,25000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,Solidity
+Eminence,1601251200,15000000,Ethereum,Ecosystem,Flashloan Price Oracle Attack,Solidity
+Lendf.me,1587254400,1200000,Ethereum,Smart Contract Language,Reentrancy,Solidity
+Parity Multisig,1510185600,150000000,Ethereum,Protocol Logic,Contract not initialized,Solidity
+The DAO,1466121600,60000000,Ethereum,Protocol Logic,Reentrancy,Solidity

@@ -1,0 +1,27 @@
+{
+  "dataset_version": "0.3.0",
+  "taxonomy_version": "1",
+  "generated_at": "2026-05-09T20:00:04.477336Z",
+  "counts": {
+    "contracts": 27,
+    "findings": 85,
+    "incidents": 21,
+    "synthetic_cases": 32
+  },
+  "schema": [
+    "address",
+    "chain_id",
+    "contract_name",
+    "finding_id",
+    "detector",
+    "severity",
+    "confidence",
+    "description"
+  ],
+  "filters": {
+    "detector": null,
+    "min_severity": "High",
+    "chain_id": null
+  },
+  "rows": 14
+}
